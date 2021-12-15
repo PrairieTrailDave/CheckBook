@@ -51,7 +51,7 @@ namespace CheckBook
             this.ledgerDataGridView.Name = "ledgerDataGridView";
             this.ledgerDataGridView.RowHeadersWidth = 62;
             this.ledgerDataGridView.RowTemplate.Height = 33;
-            this.ledgerDataGridView.Size = new System.Drawing.Size(712, 598);
+            this.ledgerDataGridView.Size = new System.Drawing.Size(1175, 598);
             this.ledgerDataGridView.TabIndex = 0;
             // 
             // openQuickenFileDialog
@@ -130,7 +130,7 @@ namespace CheckBook
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainScreen";
-            this.Text = "Main Screen";
+            this.Text = "Check Book Program";
             ((System.ComponentModel.ISupportInitialize)(this.ledgerDataGridView)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

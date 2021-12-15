@@ -334,14 +334,17 @@ namespace CheckBook
 
                 foreach (DataGridViewRow tRow in DetailDataGridView.Rows)
                 {
-                    CategoryEntry tEntry = new CategoryEntry();
-                    tEntry.AccountName = tRow.Cells[0].Value.ToString();
-                    tEntry.Notes = tRow.Cells[1].Value.ToString();
-                    string amt = tRow.Cells[2].Value.ToString();
-                    decimal EAmt;
-                    if (Decimal.TryParse(amt, out EAmt))
-                        tEntry.Amount = 0.00M - EAmt;
-                    tSubAccounts.Add(tEntry);
+                    if (tRow.Cells[0].Value != null)
+                    {
+                        CategoryEntry tEntry = new CategoryEntry();
+                        tEntry.AccountName = tRow.Cells[0].Value.ToString();
+                        tEntry.Notes = tRow.Cells[1].Value.ToString();
+                        string amt = tRow.Cells[2].Value.ToString();
+                        decimal EAmt;
+                        if (Decimal.TryParse(amt, out EAmt))
+                            tEntry.Amount = 0.00M - EAmt;
+                        tSubAccounts.Add(tEntry);
+                    }
                 }
             }
             Decimal tBalance;

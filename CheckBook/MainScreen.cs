@@ -152,9 +152,8 @@ namespace CheckBook
                     if (csvFile.Read())
                     {
                         csvFile.ReadHeader();
-                        while (!sr.EndOfStream)
-                        {
-                            csvFile.Read();
+                        while (csvFile.Read())
+                        {                            
                             string test = csvFile.GetField(0).Trim();
                             if (test == "AccountsEnd") 
                                 break;
