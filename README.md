@@ -28,7 +28,7 @@ I wrote this for my own use. Your use of this program may open you up to financi
 
 Example user interface:
 Main screen showing the current ledger
-![image](https://user-images.githubusercontent.com/16313413/146238046-a0da1184-23e4-4983-ab63-9a21eb9767a4.png)
+![image](https://user-images.githubusercontent.com/16313413/146239323-5940c335-1ecf-4a84-9836-9fa6c4773af9.png)
 
 How to add a transaction to the ledger
 ![image](https://user-images.githubusercontent.com/16313413/146238391-ca0f7922-11b8-47d2-83a2-e1500f2618cb.png)
