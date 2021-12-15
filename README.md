@@ -34,7 +34,8 @@ How to add a transaction to the ledger
 ![image](https://user-images.githubusercontent.com/16313413/146238391-ca0f7922-11b8-47d2-83a2-e1500f2618cb.png)
 
 Reconciliation Screen
-![image](https://user-images.githubusercontent.com/16313413/146238897-7d436285-2842-48c8-9738-ea91725b655d.png)
+![image](https://user-images.githubusercontent.com/16313413/146239192-ae597906-a078-4f34-9d22-146265c3323e.png)
+
 
 
 
