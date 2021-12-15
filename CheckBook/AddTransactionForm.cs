@@ -1,4 +1,7 @@
-﻿using System;
+﻿//
+//  Copyright 2021 David Randolph
+//
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
