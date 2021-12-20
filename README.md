@@ -15,17 +15,12 @@ This program also is able to import data from DOS Quicken (version 2000 in my ca
 
 Right now, the functions include
 
-a. Pull in the database and compute the current balance
-
-b. Add a transaction to the database and continue the balance
-
-c. Put the transaction in a category
-
-d. Remember the last transaction to a payee and auto fill this transaction with that data
-
-e. Reconcile the ledger with the bank statement
-
-f. Allow transactions to be broken up into multiple sub-categories
+1. Pull in the database and compute the current balance
+2. Add a transaction to the database and continue the balance
+3. Put the transaction in a category
+4. Remember the last transaction to a payee and auto fill this transaction with that data
+5. Reconcile the ledger with the bank statement
+6. Allow transactions to be broken up into multiple sub-categories
 
 
 USE THIS PROGRAM AT YOUR OWN RISK!!!!
