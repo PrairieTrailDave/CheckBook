@@ -181,17 +181,23 @@ namespace CheckBook
                             LE.Balance = Decimal.Parse(csvFile.GetField(FieldID++));
                             LE.Amount = Decimal.Parse(csvFile.GetField(FieldID++));
                             LE.Account = csvFile.GetField(FieldID++);
-                            string testle = csvFile.GetField(FieldID);
+                            
+                            // if there are any sub categories, add them
                             if (!string.IsNullOrEmpty(csvFile.GetField(FieldID)))
                             {
                                 LE.SubAccounts = new List<CategoryEntry>();
-                                //while (!string.IsNullOrEmpty(csvFile.GetField(FieldID)))
+
+                                // field count is not accurate
                                 while (FieldID < FieldCount)
                                 {
                                     CategoryEntry CE = new CategoryEntry();
                                     CE.AccountName = csvFile.GetField(FieldID++);
                                     CE.Notes = csvFile.GetField(FieldID++);
-                                    CE.Amount = Decimal.Parse(csvFile.GetField(FieldID++));
+                                    // test if all three fields are blank, if so, quit
+                                    string testDecimal = csvFile.GetField(FieldID++);
+                                    if ((CE.AccountName.Trim() == "") && (CE.Notes.Trim() == "") && (testDecimal.Trim() == ""))
+                                        break;
+                                    CE.Amount = Decimal.Parse(testDecimal);
                                     LE.SubAccounts.Add(CE);
                                 }
                             }
