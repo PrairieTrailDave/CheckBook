@@ -1,5 +1,5 @@
 # CheckBook
-A Checkbook application with user interface
+A Checkbook application with user interface and Excel database
 
 This is a quick and dirty checkbook program that I wrote to replace my old DOS Quicken program. 
 The computer that the Quicken was running on finally started to have the power die and I needed a new program.
