@@ -131,6 +131,26 @@ namespace CheckBook
 
         }
 
+        private void reportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ActiveBook.CurrentLedger.Count > 0)
+            {
+                DetailReportForm DRF = new DetailReportForm();
+                DRF.ActiveBook = ActiveBook;
+                DRF.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Please load a checkbook first");
+            }
+
+        }
+
+
+
+
+
+
 
 
 
@@ -197,8 +217,17 @@ namespace CheckBook
                                     string testDecimal = csvFile.GetField(FieldID++);
                                     if ((CE.AccountName.Trim() == "") && (CE.Notes.Trim() == "") && (testDecimal.Trim() == ""))
                                         break;
-                                    CE.Amount = Decimal.Parse(testDecimal);
-                                    LE.SubAccounts.Add(CE);
+                                    decimal realDecimal;
+                                    if (Decimal.TryParse(testDecimal, out realDecimal))
+                                    {
+                                        CE.Amount = realDecimal;
+                                        LE.SubAccounts.Add(CE);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Invalid amount in subcategory, column#:", (FieldID-1).ToString());
+                                        break;
+                                    }
                                 }
                             }
 

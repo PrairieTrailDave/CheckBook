@@ -326,7 +326,7 @@ namespace CheckBook
             if (TransactionDebit == 0.00M)
                 CheckAmount = TransactionCredit;
             else
-                CheckAmount = TransactionDebit;
+                CheckAmount = 0.00M - TransactionDebit;
 
             List<CategoryEntry> tSubAccounts = null;
             if (DetailDataGridView.Rows.Count > 0)

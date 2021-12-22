@@ -40,6 +40,7 @@ namespace CheckBook
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addTransactionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reconcileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.ledgerDataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -47,11 +48,12 @@ namespace CheckBook
             // ledgerDataGridView
             // 
             this.ledgerDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ledgerDataGridView.Location = new System.Drawing.Point(36, 47);
+            this.ledgerDataGridView.Location = new System.Drawing.Point(25, 28);
+            this.ledgerDataGridView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ledgerDataGridView.Name = "ledgerDataGridView";
             this.ledgerDataGridView.RowHeadersWidth = 62;
             this.ledgerDataGridView.RowTemplate.Height = 33;
-            this.ledgerDataGridView.Size = new System.Drawing.Size(1175, 598);
+            this.ledgerDataGridView.Size = new System.Drawing.Size(822, 359);
             this.ledgerDataGridView.TabIndex = 0;
             // 
             // openQuickenFileDialog
@@ -68,10 +70,12 @@ namespace CheckBook
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.addTransactionToolStripMenuItem,
-            this.reconcileToolStripMenuItem});
+            this.reconcileToolStripMenuItem,
+            this.reportToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1223, 33);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
+            this.menuStrip1.Size = new System.Drawing.Size(856, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -82,27 +86,27 @@ namespace CheckBook
             this.saveToolStripMenuItem,
             this.importToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 22);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(169, 34);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(169, 34);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(169, 34);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.importToolStripMenuItem.Text = "Import";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.ImportToolStripMenuItem_Click);
             // 
@@ -110,25 +114,33 @@ namespace CheckBook
             // 
             this.addTransactionToolStripMenuItem.Name = "addTransactionToolStripMenuItem";
             this.addTransactionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
-            this.addTransactionToolStripMenuItem.Size = new System.Drawing.Size(155, 29);
+            this.addTransactionToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
             this.addTransactionToolStripMenuItem.Text = "&Add Transaction";
             this.addTransactionToolStripMenuItem.Click += new System.EventHandler(this.addTransactionToolStripMenuItem_Click);
             // 
             // reconcileToolStripMenuItem
             // 
             this.reconcileToolStripMenuItem.Name = "reconcileToolStripMenuItem";
-            this.reconcileToolStripMenuItem.Size = new System.Drawing.Size(101, 29);
+            this.reconcileToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
             this.reconcileToolStripMenuItem.Text = "&Reconcile";
             this.reconcileToolStripMenuItem.Click += new System.EventHandler(this.reconcileToolStripMenuItem_Click);
             // 
+            // reportToolStripMenuItem
+            // 
+            this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
+            this.reportToolStripMenuItem.Size = new System.Drawing.Size(54, 22);
+            this.reportToolStripMenuItem.Text = "Report";
+            this.reportToolStripMenuItem.Click += new System.EventHandler(this.reportToolStripMenuItem_Click);
+            // 
             // MainScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1223, 657);
+            this.ClientSize = new System.Drawing.Size(856, 394);
             this.Controls.Add(this.ledgerDataGridView);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainScreen";
             this.Text = "Check Book Program";
             ((System.ComponentModel.ISupportInitialize)(this.ledgerDataGridView)).EndInit();
@@ -152,6 +164,7 @@ namespace CheckBook
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addTransactionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reconcileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reportToolStripMenuItem;
     }
 }
 
