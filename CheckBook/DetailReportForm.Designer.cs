@@ -33,6 +33,7 @@ namespace CheckBook
             this.TimePeriodListBox = new System.Windows.Forms.ListBox();
             this.ReportDataGridView = new System.Windows.Forms.DataGridView();
             this.SaveButton = new System.Windows.Forms.Button();
+            this.SaveReportFileDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.ReportDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -102,5 +103,6 @@ namespace CheckBook
         private System.Windows.Forms.ListBox TimePeriodListBox;
         private System.Windows.Forms.DataGridView ReportDataGridView;
         private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.SaveFileDialog SaveReportFileDialog;
     }
 }

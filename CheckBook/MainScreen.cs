@@ -33,6 +33,8 @@ namespace CheckBook
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            openBKFileDialog.Filter = "CheckBook files (*.csv)|*.csv|All files (*.*)|*.*";
+
             if (openBKFileDialog.ShowDialog() == DialogResult.OK)
             {
                 this.UseWaitCursor = true;
@@ -55,7 +57,9 @@ namespace CheckBook
                     return;
             }
             saveBKFileDialog.OverwritePrompt = false;
+            saveBKFileDialog.AddExtension = true;
             saveBKFileDialog.DefaultExt = "csv";
+            saveBKFileDialog.Filter = "CheckBook files (*.csv)|*.csv|All files (*.*)|*.*";
             if (saveBKFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Cursor = Cursors.WaitCursor;
@@ -242,14 +246,14 @@ namespace CheckBook
 
         private void SaveDataFile (string FileName)
         {
-            using (StreamWriter csvWriter = new StreamWriter(saveBKFileDialog.FileName, false))
+            using (StreamWriter csvWriter = new StreamWriter(FileName, false))
             {
                 using (var csvFile = new CsvWriter(csvWriter, CultureInfo.InvariantCulture))
                 {
                     csvFile.WriteRecords(ActiveBook.Accounts);
                 }
             }
-            using (StreamWriter csvWriter = new StreamWriter(saveBKFileDialog.FileName, true))
+            using (StreamWriter csvWriter = new StreamWriter(FileName, true))
             {
                 csvWriter.WriteLine("AccountsEnd");  // put in a indicator before the next section
 
@@ -286,10 +290,7 @@ namespace CheckBook
 
         }
 
-        private void RunButton_Click(object sender, EventArgs e)
-        {
-            
-        }
+
 
 
         private void LoadQuickenFile(string FileName)
