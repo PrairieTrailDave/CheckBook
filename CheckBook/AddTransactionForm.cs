@@ -28,6 +28,10 @@ namespace CheckBook
 
         decimal TransactionDebit = 0.00M;
         decimal TransactionCredit = 0.00M;
+        decimal DetailSubTotal = 0.00M;
+
+        int CurrentDetailRow;
+        int scrollLen = 4;
 
         public AddTransactionForm()
         {
@@ -44,6 +48,7 @@ namespace CheckBook
             newEntry = false;
             TransactionCredit = 0.00M;
             TransactionDebit = 0.00M;
+
         }
 
 
@@ -68,7 +73,7 @@ namespace CheckBook
             foreach (string cat in Categories)
                 CategoryListBox.Items.Add(cat);
 
-
+            CurrentDetailRow = -1;
         }
 
         private void CheckNumberTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -119,6 +124,7 @@ namespace CheckBook
                 if (LastTransaction.SubAccounts.Count > 0)
                 {
                     int subi = 0;
+                    DetailSubTotal = 0.00M;
                     List<CategoryEntry> tSubAccounts = new List<CategoryEntry>();
 
                     while (subi < LastTransaction.SubAccounts.Count)
@@ -131,11 +137,21 @@ namespace CheckBook
                         };
                         tSubAccounts.Add(tEntry);
                         subi++;
+                        DetailSubTotal = DetailSubTotal + tEntry.Amount;
+                    }
+                    while (subi++ < 40)
+                    {
+                        tSubAccounts.Add(new CategoryEntry());
                     }
                     DetailDataGridView.DataSource = tSubAccounts;
                     DetailDataGridView.AutoResizeColumn(0);
                     DetailDataGridView.Columns[1].Width = 350;
                     DetailDataGridView.Visible = true;
+
+                    DetailTotalLabel.Visible = true;
+                    DetailTotalTextBox.Visible = true;
+                    DetailTotalTextBox.ReadOnly = true;
+                    DetailTotalTextBox.Text = DetailSubTotal.ToString();
                 }
             }
             CheckAmountTextBox.Focus();
@@ -145,20 +161,31 @@ namespace CheckBook
         {
             if (CheckAmountTextBox.Text.Length > 0)
             {
-                decimal Amount = Decimal.Parse(CheckAmountTextBox.Text);
-                TransactionDebit = Amount;
-                CheckAmountTextBox.Text = Amount.ToString("C");
-                CurrentBalanceTextBox.Text = (PriorBalance - Amount).ToString("C");
+                string sAmount = CheckAmountTextBox.Text;
+                if (sAmount.Length > 1)
+                    if (sAmount[0] == '$') sAmount = sAmount.Substring(1);
+                decimal tryDecimal;
+                if (Decimal.TryParse(sAmount, out tryDecimal))
+                {
+                    decimal Amount = Decimal.Parse(sAmount);
+                    TransactionDebit = Amount;
+                    CheckAmountTextBox.Text = Amount.ToString("0.00");
+                    CurrentBalanceTextBox.Text = (PriorBalance - Amount).ToString("C");
+                }
             }
         }
 
         private void DepositTextBox_Leave(object sender, EventArgs e)
         {
-            if (DepositTextBox.Text.Length > 0)
+            string sDeposit = DepositTextBox.Text;
+            if (sDeposit.Length > 1)
+                if (sDeposit[0] == '$') sDeposit = sDeposit.Substring(1);
+            decimal tryDecimal;
+            if (Decimal.TryParse(sDeposit, out tryDecimal))
             {
-                decimal Amount = Decimal.Parse(DepositTextBox.Text);
+                decimal Amount = Decimal.Parse(sDeposit);
                 TransactionCredit = Amount;
-                DepositTextBox.Text = Amount.ToString("C");
+                DepositTextBox.Text = Amount.ToString("0.00");
                 CurrentBalanceTextBox.Text = (PriorBalance + Amount).ToString("C");
             }
         }
@@ -191,8 +218,9 @@ namespace CheckBook
 
         private void SplitCategoryButton_Click(object sender, EventArgs e)
         {
+            CategoriesComboBox.Text = "Split";
             List<CategoryEntry> tSubAccounts = new List<CategoryEntry>();
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 40; i++)
                 tSubAccounts.Add(new CategoryEntry());
             DetailDataGridView.DataSource = tSubAccounts;
             DetailDataGridView.AutoResizeColumn(0);
@@ -202,29 +230,40 @@ namespace CheckBook
 
         }
 
-        private void DetailDataGridView_Enter(object sender, EventArgs e)
+        private void DetailDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // check to make sure that this is the first empty row in the grid
-            int RowNum = 0;
-            while (RowNum < DetailDataGridView.RowCount)
-            {
-                if ((String.IsNullOrEmpty((string)DetailDataGridView.Rows[RowNum].Cells[0].Value)) &&
-                    (String.IsNullOrEmpty((string)DetailDataGridView.Rows[RowNum].Cells[1].Value)) &&
-                    ((decimal)DetailDataGridView.Rows[RowNum].Cells[2].Value == 0.00M))
-                    break;
-                RowNum++;
-            }
-            int trow = DetailDataGridView.SelectedCells[0].RowIndex;
-            if (DetailDataGridView.CurrentCell.RowIndex > RowNum)
-                DetailDataGridView.CurrentCell = DetailDataGridView.Rows[RowNum].Cells[0];
+            CurrentDetailRow = e.RowIndex;
 
             // then show the input panel
 
-            ClearItemPanel();
-            DetailInputPanel.Location = new Point(DetailDataGridView.Location.X,
-                DetailDataGridView.Top + (RowNum+2)*DetailDataGridView.Rows[RowNum].Height);
-            DetailInputPanel.Visible = true;
+            if ((String.IsNullOrEmpty((string)DetailDataGridView.Rows[CurrentDetailRow].Cells[0].Value)) &&
+                (String.IsNullOrEmpty((string)DetailDataGridView.Rows[CurrentDetailRow].Cells[1].Value)) &&
+                ((decimal)DetailDataGridView.Rows[CurrentDetailRow].Cells[2].Value == 0.00M))
+                ClearItemPanel();
+            else
+            {
+                CategoryListBox.SelectedItem = (string)DetailDataGridView.Rows[CurrentDetailRow].Cells[0].Value;
+                ItemNotesTextBox.Text = (string)DetailDataGridView.Rows[CurrentDetailRow].Cells[1].Value;
+                ItemAmountTextBox.Text = ((decimal)DetailDataGridView.Rows[CurrentDetailRow].Cells[2].Value).ToString();
+            }
+            DetailSubTotal = DetailSubTotal - ((decimal)DetailDataGridView.Rows[CurrentDetailRow].Cells[2].Value);
 
+            // figure out where to show the detail panel
+
+            int detailTop;
+            if (DetailDataGridView.FirstDisplayedScrollingRowIndex > scrollLen)
+               detailTop = CurrentDetailRow + 2 - DetailDataGridView.FirstDisplayedScrollingRowIndex ;
+            else
+                detailTop = CurrentDetailRow + 2;
+
+            DetailInputPanel.Location = new Point(DetailDataGridView.Location.X,
+                DetailDataGridView.Top + (detailTop) *DetailDataGridView.Rows[CurrentDetailRow].Height);
+            DetailInputPanel.Visible = true;
+            DetailInputPanel.Controls["CategoryListBox"].Focus();
+        }
+
+        private void DetailDataGridView_Enter(object sender, EventArgs e)
+        {
         }
 
         private void ItemClearButton_Click(object sender, EventArgs e)
@@ -260,41 +299,36 @@ namespace CheckBook
             if (e.KeyCode == Keys.Tab)
             {
                 // move the values into the datagrid view
-                // find the last empty row
-                bool EmptyRowFound = false;
-                int RowNum = 0;
-                while (RowNum < DetailDataGridView.RowCount)
-                {
-                    if ((String.IsNullOrEmpty((string)DetailDataGridView.Rows[RowNum].Cells[0].Value)) &&
-                        (String.IsNullOrEmpty((string)DetailDataGridView.Rows[RowNum].Cells[1].Value)) &&
-                        ((decimal)DetailDataGridView.Rows[RowNum].Cells[2].Value == 0.00M))
-                    {
-                        EmptyRowFound = true;
-                        break;
-                    }
-                    RowNum++;
-                }
-                if (EmptyRowFound)
-                {
-                    DataGridViewRow tRow = DetailDataGridView.Rows[RowNum];
-                    tRow.Cells[0].Value = CategoryListBox.SelectedItem;
-                    tRow.Cells[1].Value = ItemNotesTextBox.Text;
-                    tRow.Cells[2].Value = ItemAmountTextBox.Text;
-                }
-                else
-                {
-                    DataGridViewRow nRow = new DataGridViewRow();
-                    nRow.Cells[0].Value = CategoryListBox.SelectedItem;
-                    nRow.Cells[1].Value = ItemNotesTextBox.Text;
-                    nRow.Cells[2].Value = ItemAmountTextBox.Text;
-                    DetailDataGridView.Rows.Add(nRow);
-                }
 
+                DataGridViewRow tRow = DetailDataGridView.Rows[CurrentDetailRow];
+                tRow.Cells[0].Value = CategoryListBox.SelectedItem;
+                tRow.Cells[1].Value = ItemNotesTextBox.Text;
+                tRow.Cells[2].Value = ItemAmountTextBox.Text;
 
+                DetailSubTotal = DetailSubTotal + Decimal.Parse(ItemAmountTextBox.Text);
+                DetailTotalTextBox.Text = DetailSubTotal.ToString();
 
                 // and hide the input panel
 
                 DetailInputPanel.Visible = false;
+
+                // move to the next row
+
+                CurrentDetailRow++;
+                if (CurrentDetailRow > scrollLen)
+                    DetailDataGridView.FirstDisplayedScrollingRowIndex++;
+
+                // if need to add rows to the grid
+
+                if (CurrentDetailRow >= DetailDataGridView.Rows.Count)
+                {
+
+                }
+
+                // act as if we have clicked on the first cell of the new row
+                var arg = new DataGridViewCellEventArgs(0, CurrentDetailRow);
+                DetailDataGridView_CellClick(DetailDataGridView, arg);
+
             }
         }
 
@@ -376,6 +410,7 @@ namespace CheckBook
             newEntry = true;
             Close();
         }
+
 
     }
 }

@@ -54,6 +54,8 @@ namespace CheckBook
             this.ItemNotesTextBox = new System.Windows.Forms.TextBox();
             this.CategoryListBox = new System.Windows.Forms.ListBox();
             this.TransactionDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.DetailTotalLabel = new System.Windows.Forms.Label();
+            this.DetailTotalTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DetailDataGridView)).BeginInit();
             this.DetailInputPanel.SuspendLayout();
             this.SuspendLayout();
@@ -61,51 +63,57 @@ namespace CheckBook
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(76, 72);
+            this.label1.Location = new System.Drawing.Point(53, 43);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 25);
+            this.label1.Size = new System.Drawing.Size(31, 15);
             this.label1.TabIndex = 1;
             this.label1.Text = "Date";
             // 
             // CheckNumberTextBox
             // 
-            this.CheckNumberTextBox.Location = new System.Drawing.Point(232, 100);
+            this.CheckNumberTextBox.Location = new System.Drawing.Point(162, 60);
+            this.CheckNumberTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.CheckNumberTextBox.Name = "CheckNumberTextBox";
-            this.CheckNumberTextBox.Size = new System.Drawing.Size(83, 31);
+            this.CheckNumberTextBox.Size = new System.Drawing.Size(59, 23);
             this.CheckNumberTextBox.TabIndex = 2;
             this.CheckNumberTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckNumberTextBox_KeyPress);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(232, 72);
+            this.label2.Location = new System.Drawing.Point(162, 43);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(75, 25);
+            this.label2.Size = new System.Drawing.Size(50, 15);
             this.label2.TabIndex = 3;
             this.label2.Text = "Check #";
             // 
             // ToWhomTextBox
             // 
-            this.ToWhomTextBox.Location = new System.Drawing.Point(321, 100);
+            this.ToWhomTextBox.Location = new System.Drawing.Point(225, 60);
+            this.ToWhomTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.ToWhomTextBox.Name = "ToWhomTextBox";
-            this.ToWhomTextBox.Size = new System.Drawing.Size(371, 31);
+            this.ToWhomTextBox.Size = new System.Drawing.Size(261, 23);
             this.ToWhomTextBox.TabIndex = 4;
             this.ToWhomTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ToWhomTextBox_KeyPress);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(332, 72);
+            this.label3.Location = new System.Drawing.Point(232, 43);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 25);
+            this.label3.Size = new System.Drawing.Size(58, 15);
             this.label3.TabIndex = 5;
             this.label3.Text = "To Whom";
             // 
             // CheckAmountTextBox
             // 
-            this.CheckAmountTextBox.Location = new System.Drawing.Point(699, 100);
+            this.CheckAmountTextBox.Location = new System.Drawing.Point(489, 60);
+            this.CheckAmountTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.CheckAmountTextBox.Name = "CheckAmountTextBox";
-            this.CheckAmountTextBox.Size = new System.Drawing.Size(150, 31);
+            this.CheckAmountTextBox.Size = new System.Drawing.Size(106, 23);
             this.CheckAmountTextBox.TabIndex = 6;
             this.CheckAmountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckAmountTextBox_KeyPress);
             this.CheckAmountTextBox.Leave += new System.EventHandler(this.CheckAmountTextBox_Leave);
@@ -113,17 +121,19 @@ namespace CheckBook
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(699, 72);
+            this.label4.Location = new System.Drawing.Point(489, 43);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(98, 25);
+            this.label4.Size = new System.Drawing.Size(66, 15);
             this.label4.TabIndex = 7;
             this.label4.Text = "Check Amt";
             // 
             // DepositTextBox
             // 
-            this.DepositTextBox.Location = new System.Drawing.Point(855, 100);
+            this.DepositTextBox.Location = new System.Drawing.Point(598, 60);
+            this.DepositTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.DepositTextBox.Name = "DepositTextBox";
-            this.DepositTextBox.Size = new System.Drawing.Size(137, 31);
+            this.DepositTextBox.Size = new System.Drawing.Size(97, 23);
             this.DepositTextBox.TabIndex = 8;
             this.DepositTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DepositTextBox_KeyPress);
             this.DepositTextBox.Leave += new System.EventHandler(this.DepositTextBox_Leave);
@@ -131,57 +141,64 @@ namespace CheckBook
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(855, 72);
+            this.label5.Location = new System.Drawing.Point(598, 43);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(113, 25);
+            this.label5.Size = new System.Drawing.Size(73, 15);
             this.label5.TabIndex = 9;
             this.label5.Text = "Deposit Amt";
             // 
             // CurrentBalanceTextBox
             // 
-            this.CurrentBalanceTextBox.Location = new System.Drawing.Point(998, 100);
+            this.CurrentBalanceTextBox.Location = new System.Drawing.Point(699, 60);
+            this.CurrentBalanceTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.CurrentBalanceTextBox.Name = "CurrentBalanceTextBox";
-            this.CurrentBalanceTextBox.Size = new System.Drawing.Size(150, 31);
+            this.CurrentBalanceTextBox.Size = new System.Drawing.Size(106, 23);
             this.CurrentBalanceTextBox.TabIndex = 10;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(998, 32);
+            this.label6.Location = new System.Drawing.Point(699, 19);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(165, 25);
+            this.label6.Size = new System.Drawing.Size(111, 15);
             this.label6.TabIndex = 11;
             this.label6.Text = "Checkbook Balance";
             // 
             // PriorBalanceTextBox
             // 
-            this.PriorBalanceTextBox.Location = new System.Drawing.Point(998, 69);
+            this.PriorBalanceTextBox.Location = new System.Drawing.Point(699, 41);
+            this.PriorBalanceTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.PriorBalanceTextBox.Name = "PriorBalanceTextBox";
-            this.PriorBalanceTextBox.Size = new System.Drawing.Size(150, 31);
+            this.PriorBalanceTextBox.Size = new System.Drawing.Size(106, 23);
             this.PriorBalanceTextBox.TabIndex = 12;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(232, 140);
+            this.label7.Location = new System.Drawing.Point(162, 84);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 25);
+            this.label7.Size = new System.Drawing.Size(58, 15);
             this.label7.TabIndex = 14;
             this.label7.Text = "Category:";
             // 
             // CategoriesComboBox
             // 
             this.CategoriesComboBox.FormattingEnabled = true;
-            this.CategoriesComboBox.Location = new System.Drawing.Point(321, 137);
+            this.CategoriesComboBox.Location = new System.Drawing.Point(225, 82);
+            this.CategoriesComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.CategoriesComboBox.Name = "CategoriesComboBox";
-            this.CategoriesComboBox.Size = new System.Drawing.Size(371, 33);
+            this.CategoriesComboBox.Size = new System.Drawing.Size(261, 23);
             this.CategoriesComboBox.TabIndex = 15;
             // 
             // SplitCategoryButton
             // 
-            this.SplitCategoryButton.Location = new System.Drawing.Point(76, 140);
+            this.SplitCategoryButton.Location = new System.Drawing.Point(53, 84);
+            this.SplitCategoryButton.Margin = new System.Windows.Forms.Padding(2);
             this.SplitCategoryButton.Name = "SplitCategoryButton";
-            this.SplitCategoryButton.Size = new System.Drawing.Size(150, 34);
+            this.SplitCategoryButton.Size = new System.Drawing.Size(105, 20);
             this.SplitCategoryButton.TabIndex = 16;
             this.SplitCategoryButton.Text = "Split Category";
             this.SplitCategoryButton.UseVisualStyleBackColor = true;
@@ -190,10 +207,11 @@ namespace CheckBook
             // MatchingListBox
             // 
             this.MatchingListBox.FormattingEnabled = true;
-            this.MatchingListBox.ItemHeight = 25;
-            this.MatchingListBox.Location = new System.Drawing.Point(332, 137);
+            this.MatchingListBox.ItemHeight = 15;
+            this.MatchingListBox.Location = new System.Drawing.Point(232, 82);
+            this.MatchingListBox.Margin = new System.Windows.Forms.Padding(2);
             this.MatchingListBox.Name = "MatchingListBox";
-            this.MatchingListBox.Size = new System.Drawing.Size(371, 129);
+            this.MatchingListBox.Size = new System.Drawing.Size(261, 79);
             this.MatchingListBox.TabIndex = 17;
             this.MatchingListBox.Visible = false;
             this.MatchingListBox.Click += new System.EventHandler(this.MatchingListBox_Click);
@@ -201,20 +219,23 @@ namespace CheckBook
             // DetailDataGridView
             // 
             this.DetailDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DetailDataGridView.Location = new System.Drawing.Point(76, 180);
+            this.DetailDataGridView.Location = new System.Drawing.Point(53, 108);
+            this.DetailDataGridView.Margin = new System.Windows.Forms.Padding(2);
             this.DetailDataGridView.Name = "DetailDataGridView";
             this.DetailDataGridView.RowHeadersWidth = 62;
             this.DetailDataGridView.RowTemplate.Height = 33;
-            this.DetailDataGridView.Size = new System.Drawing.Size(773, 582);
+            this.DetailDataGridView.Size = new System.Drawing.Size(681, 361);
             this.DetailDataGridView.TabIndex = 18;
             this.DetailDataGridView.Visible = false;
+            this.DetailDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DetailDataGridView_CellClick);
             this.DetailDataGridView.Enter += new System.EventHandler(this.DetailDataGridView_Enter);
             // 
             // DoneButton
             // 
-            this.DoneButton.Location = new System.Drawing.Point(980, 135);
+            this.DoneButton.Location = new System.Drawing.Point(686, 81);
+            this.DoneButton.Margin = new System.Windows.Forms.Padding(2);
             this.DoneButton.Name = "DoneButton";
-            this.DoneButton.Size = new System.Drawing.Size(112, 34);
+            this.DoneButton.Size = new System.Drawing.Size(78, 20);
             this.DoneButton.TabIndex = 19;
             this.DoneButton.Text = "Done";
             this.DoneButton.UseVisualStyleBackColor = true;
@@ -227,17 +248,19 @@ namespace CheckBook
             this.DetailInputPanel.Controls.Add(this.ItemAmountTextBox);
             this.DetailInputPanel.Controls.Add(this.ItemNotesTextBox);
             this.DetailInputPanel.Controls.Add(this.CategoryListBox);
-            this.DetailInputPanel.Location = new System.Drawing.Point(76, 205);
+            this.DetailInputPanel.Location = new System.Drawing.Point(53, 202);
+            this.DetailInputPanel.Margin = new System.Windows.Forms.Padding(2);
             this.DetailInputPanel.Name = "DetailInputPanel";
-            this.DetailInputPanel.Size = new System.Drawing.Size(795, 310);
+            this.DetailInputPanel.Size = new System.Drawing.Size(556, 186);
             this.DetailInputPanel.TabIndex = 20;
             this.DetailInputPanel.Visible = false;
             // 
             // ItemCancelButton
             // 
-            this.ItemCancelButton.Location = new System.Drawing.Point(493, 223);
+            this.ItemCancelButton.Location = new System.Drawing.Point(345, 134);
+            this.ItemCancelButton.Margin = new System.Windows.Forms.Padding(2);
             this.ItemCancelButton.Name = "ItemCancelButton";
-            this.ItemCancelButton.Size = new System.Drawing.Size(112, 34);
+            this.ItemCancelButton.Size = new System.Drawing.Size(78, 20);
             this.ItemCancelButton.TabIndex = 4;
             this.ItemCancelButton.Text = "Cancel";
             this.ItemCancelButton.UseVisualStyleBackColor = true;
@@ -245,9 +268,10 @@ namespace CheckBook
             // 
             // ItemClearButton
             // 
-            this.ItemClearButton.Location = new System.Drawing.Point(364, 223);
+            this.ItemClearButton.Location = new System.Drawing.Point(255, 134);
+            this.ItemClearButton.Margin = new System.Windows.Forms.Padding(2);
             this.ItemClearButton.Name = "ItemClearButton";
-            this.ItemClearButton.Size = new System.Drawing.Size(112, 34);
+            this.ItemClearButton.Size = new System.Drawing.Size(78, 20);
             this.ItemClearButton.TabIndex = 3;
             this.ItemClearButton.Text = "Clear";
             this.ItemClearButton.UseVisualStyleBackColor = true;
@@ -255,42 +279,66 @@ namespace CheckBook
             // 
             // ItemAmountTextBox
             // 
-            this.ItemAmountTextBox.Location = new System.Drawing.Point(581, 16);
+            this.ItemAmountTextBox.Location = new System.Drawing.Point(407, 10);
+            this.ItemAmountTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.ItemAmountTextBox.Name = "ItemAmountTextBox";
-            this.ItemAmountTextBox.Size = new System.Drawing.Size(192, 31);
+            this.ItemAmountTextBox.Size = new System.Drawing.Size(136, 23);
             this.ItemAmountTextBox.TabIndex = 2;
             this.ItemAmountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ItemAmountTextBox_KeyPress);
             this.ItemAmountTextBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ItemAmountTextBox_PreviewKeyDown);
             // 
             // ItemNotesTextBox
             // 
-            this.ItemNotesTextBox.Location = new System.Drawing.Point(257, 16);
+            this.ItemNotesTextBox.Location = new System.Drawing.Point(180, 10);
+            this.ItemNotesTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.ItemNotesTextBox.Name = "ItemNotesTextBox";
-            this.ItemNotesTextBox.Size = new System.Drawing.Size(317, 31);
+            this.ItemNotesTextBox.Size = new System.Drawing.Size(223, 23);
             this.ItemNotesTextBox.TabIndex = 1;
             // 
             // CategoryListBox
             // 
             this.CategoryListBox.FormattingEnabled = true;
-            this.CategoryListBox.ItemHeight = 25;
-            this.CategoryListBox.Location = new System.Drawing.Point(3, 16);
+            this.CategoryListBox.ItemHeight = 15;
+            this.CategoryListBox.Location = new System.Drawing.Point(2, 10);
+            this.CategoryListBox.Margin = new System.Windows.Forms.Padding(2);
             this.CategoryListBox.Name = "CategoryListBox";
-            this.CategoryListBox.Size = new System.Drawing.Size(247, 279);
+            this.CategoryListBox.Size = new System.Drawing.Size(174, 169);
             this.CategoryListBox.TabIndex = 0;
             // 
             // TransactionDateTimePicker
             // 
             this.TransactionDateTimePicker.CustomFormat = "MM/dd/yyyy";
-            this.TransactionDateTimePicker.Location = new System.Drawing.Point(76, 98);
+            this.TransactionDateTimePicker.Location = new System.Drawing.Point(53, 59);
+            this.TransactionDateTimePicker.Margin = new System.Windows.Forms.Padding(2);
             this.TransactionDateTimePicker.Name = "TransactionDateTimePicker";
-            this.TransactionDateTimePicker.Size = new System.Drawing.Size(150, 31);
+            this.TransactionDateTimePicker.Size = new System.Drawing.Size(106, 23);
             this.TransactionDateTimePicker.TabIndex = 21;
+            // 
+            // DetailTotalLabel
+            // 
+            this.DetailTotalLabel.AutoSize = true;
+            this.DetailTotalLabel.Location = new System.Drawing.Point(561, 484);
+            this.DetailTotalLabel.Name = "DetailTotalLabel";
+            this.DetailTotalLabel.Size = new System.Drawing.Size(68, 15);
+            this.DetailTotalLabel.TabIndex = 22;
+            this.DetailTotalLabel.Text = "Detail Total:";
+            this.DetailTotalLabel.Visible = false;
+            // 
+            // DetailTotalTextBox
+            // 
+            this.DetailTotalTextBox.Location = new System.Drawing.Point(634, 481);
+            this.DetailTotalTextBox.Name = "DetailTotalTextBox";
+            this.DetailTotalTextBox.Size = new System.Drawing.Size(100, 23);
+            this.DetailTotalTextBox.TabIndex = 23;
+            this.DetailTotalTextBox.Visible = false;
             // 
             // AddTransactionForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1221, 800);
+            this.ClientSize = new System.Drawing.Size(905, 687);
+            this.Controls.Add(this.DetailTotalTextBox);
+            this.Controls.Add(this.DetailTotalLabel);
             this.Controls.Add(this.TransactionDateTimePicker);
             this.Controls.Add(this.DetailInputPanel);
             this.Controls.Add(this.DoneButton);
@@ -311,6 +359,7 @@ namespace CheckBook
             this.Controls.Add(this.label2);
             this.Controls.Add(this.CheckNumberTextBox);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "AddTransactionForm";
             this.Text = "AddTransaction";
             this.Activated += new System.EventHandler(this.AddTransactionForm_Activated);
@@ -349,5 +398,7 @@ namespace CheckBook
         private System.Windows.Forms.Button ItemClearButton;
         private System.Windows.Forms.Button ItemCancelButton;
         private System.Windows.Forms.DateTimePicker TransactionDateTimePicker;
+        private System.Windows.Forms.Label DetailTotalLabel;
+        private System.Windows.Forms.TextBox DetailTotalTextBox;
     }
 }
