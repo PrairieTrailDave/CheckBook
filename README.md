@@ -21,7 +21,7 @@ Right now, the functions include
 4. Remember the last transaction to a payee and auto fill this transaction with that data
 5. Reconcile the ledger with the bank statement
 6. Allow transactions to be broken up into multiple sub-categories
-
+7. Reporting split up by category (helps with taxes)
 
 USE THIS PROGRAM AT YOUR OWN RISK!!!!
 
@@ -29,14 +29,21 @@ I wrote this for my own use. Your use of this program may open you up to financi
 
 Example user interface:
 Main screen showing the current ledger
-![image](https://user-images.githubusercontent.com/16313413/146239323-5940c335-1ecf-4a84-9836-9fa6c4773af9.png)
+![image](https://user-images.githubusercontent.com/16313413/148289799-2ee31a4e-3716-427e-a476-a48de4d989ae.png)
+
 
 How to add a transaction to the ledger
-![image](https://user-images.githubusercontent.com/16313413/146238391-ca0f7922-11b8-47d2-83a2-e1500f2618cb.png)
+![image](https://user-images.githubusercontent.com/16313413/148289915-dbdbdfb3-d32e-4a8d-8388-3ca0efe34b79.png)
+
+Adding transaction with split categories
+![image](https://user-images.githubusercontent.com/16313413/148290187-6b649b32-6cf8-40a4-9076-4132da489dc7.png)
+
 
 Reconciliation Screen
-![image](https://user-images.githubusercontent.com/16313413/146239192-ae597906-a078-4f34-9d22-146265c3323e.png)
+![image](https://user-images.githubusercontent.com/16313413/148290242-5756d0a2-ea86-4186-a0d0-0bb1c4acd42e.png)
 
+Report Screen
+![image](https://user-images.githubusercontent.com/16313413/148290293-4edd553a-dde7-4e04-82fc-ebc371f8693a.png)
 
 
 
