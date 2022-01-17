@@ -346,15 +346,21 @@ namespace CheckBook
                  TransactionDebit == 0.00M)
             {
                 if (DepositTextBox.Text.Length > 0)
+                {
                     if (Char.IsDigit(DepositTextBox.Text[0]))
                         Decimal.TryParse(DepositTextBox.Text, out TransactionCredit);
                     else
                         Decimal.TryParse(DepositTextBox.Text.Substring(1), out TransactionCredit);
+                    CurrentBalanceTextBox.Text = (PriorBalance + TransactionCredit).ToString("C");
+                }
                 if (CheckAmountTextBox.Text.Length > 0)
+                {
                     if (Char.IsDigit(CheckAmountTextBox.Text[0]))
                         Decimal.TryParse(CheckAmountTextBox.Text, out TransactionDebit);
                     else
                         Decimal.TryParse(CheckAmountTextBox.Text.Substring(1), out TransactionDebit);
+                    CurrentBalanceTextBox.Text = (PriorBalance + TransactionCredit - TransactionDebit).ToString("C");
+                }
             }
 
             if (TransactionDebit == 0.00M)
