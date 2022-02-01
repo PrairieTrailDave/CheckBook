@@ -56,6 +56,7 @@ namespace CheckBook
             this.TransactionDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.DetailTotalLabel = new System.Windows.Forms.Label();
             this.DetailTotalTextBox = new System.Windows.Forms.TextBox();
+            this.DeleteButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DetailDataGridView)).BeginInit();
             this.DetailInputPanel.SuspendLayout();
             this.SuspendLayout();
@@ -228,7 +229,6 @@ namespace CheckBook
             this.DetailDataGridView.TabIndex = 18;
             this.DetailDataGridView.Visible = false;
             this.DetailDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DetailDataGridView_CellClick);
-            this.DetailDataGridView.Enter += new System.EventHandler(this.DetailDataGridView_Enter);
             // 
             // DoneButton
             // 
@@ -243,6 +243,7 @@ namespace CheckBook
             // 
             // DetailInputPanel
             // 
+            this.DetailInputPanel.Controls.Add(this.DeleteButton);
             this.DetailInputPanel.Controls.Add(this.ItemCancelButton);
             this.DetailInputPanel.Controls.Add(this.ItemClearButton);
             this.DetailInputPanel.Controls.Add(this.ItemAmountTextBox);
@@ -257,7 +258,7 @@ namespace CheckBook
             // 
             // ItemCancelButton
             // 
-            this.ItemCancelButton.Location = new System.Drawing.Point(345, 134);
+            this.ItemCancelButton.Location = new System.Drawing.Point(339, 97);
             this.ItemCancelButton.Margin = new System.Windows.Forms.Padding(2);
             this.ItemCancelButton.Name = "ItemCancelButton";
             this.ItemCancelButton.Size = new System.Drawing.Size(78, 20);
@@ -268,7 +269,7 @@ namespace CheckBook
             // 
             // ItemClearButton
             // 
-            this.ItemClearButton.Location = new System.Drawing.Point(255, 134);
+            this.ItemClearButton.Location = new System.Drawing.Point(249, 97);
             this.ItemClearButton.Margin = new System.Windows.Forms.Padding(2);
             this.ItemClearButton.Name = "ItemClearButton";
             this.ItemClearButton.Size = new System.Drawing.Size(78, 20);
@@ -317,7 +318,7 @@ namespace CheckBook
             // DetailTotalLabel
             // 
             this.DetailTotalLabel.AutoSize = true;
-            this.DetailTotalLabel.Location = new System.Drawing.Point(561, 484);
+            this.DetailTotalLabel.Location = new System.Drawing.Point(603, 484);
             this.DetailTotalLabel.Name = "DetailTotalLabel";
             this.DetailTotalLabel.Size = new System.Drawing.Size(68, 15);
             this.DetailTotalLabel.TabIndex = 22;
@@ -326,11 +327,21 @@ namespace CheckBook
             // 
             // DetailTotalTextBox
             // 
-            this.DetailTotalTextBox.Location = new System.Drawing.Point(634, 481);
+            this.DetailTotalTextBox.Location = new System.Drawing.Point(634, 502);
             this.DetailTotalTextBox.Name = "DetailTotalTextBox";
             this.DetailTotalTextBox.Size = new System.Drawing.Size(100, 23);
             this.DetailTotalTextBox.TabIndex = 23;
             this.DetailTotalTextBox.Visible = false;
+            // 
+            // DeleteButton
+            // 
+            this.DeleteButton.Location = new System.Drawing.Point(457, 156);
+            this.DeleteButton.Name = "DeleteButton";
+            this.DeleteButton.Size = new System.Drawing.Size(75, 23);
+            this.DeleteButton.TabIndex = 5;
+            this.DeleteButton.Text = "Delete";
+            this.DeleteButton.UseVisualStyleBackColor = true;
+            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
             // AddTransactionForm
             // 
@@ -400,5 +411,6 @@ namespace CheckBook
         private System.Windows.Forms.DateTimePicker TransactionDateTimePicker;
         private System.Windows.Forms.Label DetailTotalLabel;
         private System.Windows.Forms.TextBox DetailTotalTextBox;
+        private System.Windows.Forms.Button DeleteButton;
     }
 }

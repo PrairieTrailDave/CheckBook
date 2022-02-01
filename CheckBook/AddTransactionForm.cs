@@ -216,6 +216,8 @@ namespace CheckBook
             e.Handled = true;
         }
 
+        // methods for dealing with a split transaction - show the detail grid
+
         private void SplitCategoryButton_Click(object sender, EventArgs e)
         {
             CategoriesComboBox.Text = "Split";
@@ -262,9 +264,8 @@ namespace CheckBook
             DetailInputPanel.Controls["CategoryListBox"].Focus();
         }
 
-        private void DetailDataGridView_Enter(object sender, EventArgs e)
-        {
-        }
+
+        // methods for dealing with the specific item subpanel
 
         private void ItemClearButton_Click(object sender, EventArgs e)
         {
@@ -274,6 +275,48 @@ namespace CheckBook
         {
             DetailInputPanel.Visible = false;
         }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            // delete this item 
+
+            DataGridViewRow tRow = DetailDataGridView.Rows[CurrentDetailRow];
+            tRow.Cells[0].Value = "";
+            tRow.Cells[1].Value = "";
+            tRow.Cells[2].Value = 0.00M;
+
+
+            // move all the subsequent items up
+            int LastRow = DetailDataGridView.Rows.Count - 1;
+            if (LastRow > 1)
+            {
+                int MoveRow = CurrentDetailRow + 1;
+                while (MoveRow < LastRow)
+                {
+                    DataGridViewRow MRow = DetailDataGridView.Rows[MoveRow];
+                    tRow = DetailDataGridView.Rows[MoveRow - 1];
+                    tRow.Cells[0].Value = MRow.Cells[0].Value;
+                    tRow.Cells[1].Value = MRow.Cells[1].Value;
+                    tRow.Cells[2].Value = MRow.Cells[2].Value;
+
+                    MoveRow++;
+                }
+
+            }
+            // clear last row
+            tRow = DetailDataGridView.Rows[LastRow];
+            tRow.Cells[0].Value = "";
+            tRow.Cells[1].Value = "";
+            tRow.Cells[2].Value = 0.00M;
+
+            ShowCurrentSubTotal();
+
+            // act as if we have clicked on the first cell of the new row
+            var arg = new DataGridViewCellEventArgs(0, CurrentDetailRow);
+            DetailDataGridView_CellClick(DetailDataGridView, arg);
+
+        }
+
 
         private void ClearItemPanel ()
         {
@@ -303,7 +346,7 @@ namespace CheckBook
                 DataGridViewRow tRow = DetailDataGridView.Rows[CurrentDetailRow];
                 tRow.Cells[0].Value = CategoryListBox.SelectedItem;
                 tRow.Cells[1].Value = ItemNotesTextBox.Text;
-                tRow.Cells[2].Value = ItemAmountTextBox.Text;
+                tRow.Cells[2].Value = Decimal.Parse(ItemAmountTextBox.Text);
 
 
                 ShowCurrentSubTotal();
@@ -337,8 +380,9 @@ namespace CheckBook
             DetailSubTotal = 0.00M;
             foreach (DataGridViewRow tRow in DetailDataGridView.Rows)
             {
+                string amt = tRow.Cells[2].Value.ToString();
                 decimal subDecimal = 0.00M;
-                if (Decimal.TryParse((string)tRow.Cells[2].Value, out subDecimal))
+                if (Decimal.TryParse(amt, out subDecimal))
                     DetailSubTotal = DetailSubTotal + subDecimal;
             }
             DetailTotalTextBox.Text = DetailSubTotal.ToString();
@@ -426,7 +470,6 @@ namespace CheckBook
             newEntry = true;
             Close();
         }
-
 
     }
 }
