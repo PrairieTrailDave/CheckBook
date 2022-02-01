@@ -21,7 +21,7 @@ namespace CheckBook
             public DateTime When { get; set; }
             public string CheckNumber { get; set; }
             public string ToWhom { get; set; }
-            public decimal Amount { get; set; }
+            public string Amount { get; set; }
             public int ListIndex { get; set; }
         }
         class DepositRow
@@ -29,7 +29,7 @@ namespace CheckBook
             public bool Cleared { get; set; }
             public string Date { get; set; }
             public string FromWhom { get; set; }
-            public decimal Amount { get; set; }
+            public string Amount { get; set; }
             public int ListIndex { get; set; }
         }
 
@@ -99,7 +99,7 @@ namespace CheckBook
                             When = AddedChargesDate,
                             CheckNumber = "",
                             ToWhom = "Bank Fees",
-                            Amount = BankFees,
+                            Amount = BankFees.ToString("0.00"),
                             ListIndex = newIndex
                         });
                     }
@@ -125,7 +125,7 @@ namespace CheckBook
                             Cleared = true,
                             Date = AddedChargesDate.ToShortDateString(),
                             FromWhom = "Interest Earned",
-                            Amount = Interest,
+                            Amount = Interest.ToString("0.00"),
                             ListIndex = newIndex
                         });
                     }
@@ -158,7 +158,7 @@ namespace CheckBook
                         When = ATF.tEntry.When,
                         CheckNumber = ATF.tEntry.CheckNumber,
                         ToWhom = ATF.tEntry.ToWhom,
-                        Amount = ATF.tEntry.Debit,
+                        Amount = ATF.tEntry.Debit.ToString("0.00"),
                         ListIndex = newIndex
                     });
                 }
@@ -169,7 +169,7 @@ namespace CheckBook
                         Cleared = false,
                         Date = ATF.tEntry.When.ToShortDateString(),
                         FromWhom = ATF.tEntry.ToWhom,
-                        Amount = ATF.tEntry.Credit,
+                        Amount = ATF.tEntry.Credit.ToString("0.00"),
                         ListIndex = newIndex
                     });
                 }
@@ -192,7 +192,7 @@ namespace CheckBook
                           When = ch.Ledger.When,
                           CheckNumber = ch.Ledger.CheckNumber,
                           ToWhom = ch.Ledger.ToWhom,
-                          Amount = ch.Ledger.Debit,
+                          Amount = ch.Ledger.Debit.ToString("0.00"),
                           ListIndex = ch.LIndex
                       }).ToList();
 
@@ -206,7 +206,7 @@ namespace CheckBook
                             Cleared = ch.Ledger.Cleared,
                             Date = ch.Ledger.When.ToShortDateString(),
                             FromWhom = ch.Ledger.ToWhom,
-                            Amount = ch.Ledger.Credit,
+                            Amount = ch.Ledger.Credit.ToString("0.00"),
                             ListIndex = ch.LIndex
                         }).ToList();
 
@@ -276,7 +276,7 @@ namespace CheckBook
             //int WhichCheckInLedger = (int)ChecksDataGridView.Rows[WhichCheckOnScreen].Cells[4].Value;
             int WhichCheckInLedger = Checks[WhichCheckOnScreen].ListIndex;
 
-            decimal Amount = Checks[WhichCheckOnScreen].Amount;
+            decimal Amount = Decimal.Parse(Checks[WhichCheckOnScreen].Amount);
             //Decimal Amount = ActiveBook.CurrentLedger[WhichCheckInLedger].Debit;
 
             // if this check is cleared, subtract it from the uncleared balances
@@ -303,7 +303,7 @@ namespace CheckBook
         {
             int WhichDeposit = e.RowIndex;
 
-            decimal Amount = Deposits[WhichDeposit].Amount;
+            decimal Amount = Decimal.Parse(Deposits[WhichDeposit].Amount);
 
             // if this deposit is cleared, add it to the uncleared balances
             if (!Deposits[WhichDeposit].Cleared)

@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright 2021 David Randolph
+//  Copyright 2022 David Randolph
 //
 using System;
 using System.Collections.Generic;
@@ -227,7 +227,7 @@ namespace CheckBook
             DetailDataGridView.Columns[1].Width = 350;
             DetailDataGridView.EditMode = DataGridViewEditMode.EditOnEnter;
             DetailDataGridView.Visible = true;
-
+            ShowCurrentSubTotal();
         }
 
         private void DetailDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -246,7 +246,7 @@ namespace CheckBook
                 ItemNotesTextBox.Text = (string)DetailDataGridView.Rows[CurrentDetailRow].Cells[1].Value;
                 ItemAmountTextBox.Text = ((decimal)DetailDataGridView.Rows[CurrentDetailRow].Cells[2].Value).ToString();
             }
-            DetailSubTotal = DetailSubTotal - ((decimal)DetailDataGridView.Rows[CurrentDetailRow].Cells[2].Value);
+
 
             // figure out where to show the detail panel
 
@@ -305,8 +305,8 @@ namespace CheckBook
                 tRow.Cells[1].Value = ItemNotesTextBox.Text;
                 tRow.Cells[2].Value = ItemAmountTextBox.Text;
 
-                DetailSubTotal = DetailSubTotal + Decimal.Parse(ItemAmountTextBox.Text);
-                DetailTotalTextBox.Text = DetailSubTotal.ToString();
+
+                ShowCurrentSubTotal();
 
                 // and hide the input panel
 
@@ -332,7 +332,17 @@ namespace CheckBook
             }
         }
 
-
+        private void ShowCurrentSubTotal ()
+        {
+            DetailSubTotal = 0.00M;
+            foreach (DataGridViewRow tRow in DetailDataGridView.Rows)
+            {
+                decimal subDecimal = 0.00M;
+                if (Decimal.TryParse((string)tRow.Cells[2].Value, out subDecimal))
+                    DetailSubTotal = DetailSubTotal + subDecimal;
+            }
+            DetailTotalTextBox.Text = DetailSubTotal.ToString();
+        }
 
 
         private void DoneButton_Click(object sender, EventArgs e)
