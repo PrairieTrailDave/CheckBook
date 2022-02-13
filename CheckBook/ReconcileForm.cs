@@ -67,6 +67,8 @@ namespace CheckBook
                                  select ch.Debit).Sum();
             LastReconciledBalanceTextBox.Text = ReconciledBalance.ToString("C");
             ReconciliationDateTimePicker.Format = DateTimePickerFormat.Custom;
+            ClearedBalance = ReconciledBalance;
+            ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
         }
 
         private void AddFeesAndInterestButton_Click(object sender, EventArgs e)
