@@ -85,6 +85,23 @@ namespace CheckBook
             }
         }
 
+
+        private void ToWhomTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                string MatchedName = (from ch in ActiveBook.CurrentLedger
+                                       where ch.ToWhom.ToUpper().StartsWith((ToWhomTextBox.Text).ToUpper())
+                                          && ch.When.AddYears(1) > DateTime.Now
+                                       orderby ch.ToWhom
+                                       select ch.ToWhom).Distinct().FirstOrDefault();
+                if (MatchedName != null)
+                {
+                    ToWhomTextBox.Text = MatchedName.ToString();
+                }
+            }
+        }
+
         private void ToWhomTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             List<string> PossibleNames = (from ch in ActiveBook.CurrentLedger
@@ -470,6 +487,7 @@ namespace CheckBook
             newEntry = true;
             Close();
         }
+
 
     }
 }

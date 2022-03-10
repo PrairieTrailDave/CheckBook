@@ -238,13 +238,18 @@ namespace CheckBook
 
         private void DoneButton_Click(object sender, EventArgs e)
         {
+            decimal EndingBalance;
+
             // verify that the reconcile worked
-            if (ClearedBalance != 0.00M)
+            if (Decimal.TryParse(EndingBalanceTextBox.Text, out EndingBalance))
             {
-                var ToQuit = MessageBox.Show("The reconcile is not balanced. Do you want to quit without reconciling?", "", MessageBoxButtons.YesNo);
-                if (ToQuit == DialogResult.Yes)
-                    Close();
-                return;
+                if (ClearedBalance != EndingBalance)
+                {
+                    var ToQuit = MessageBox.Show("The reconcile is not balanced. Do you want to quit without reconciling?", "", MessageBoxButtons.YesNo);
+                    if (ToQuit == DialogResult.Yes)
+                        Close();
+                    return;
+                }
             }
 
             // update the ActiveBook 
@@ -285,7 +290,6 @@ namespace CheckBook
             //if (!ActiveBook.CurrentLedger[WhichCheckInLedger].Cleared)
             if (!Checks[WhichCheckOnScreen].Cleared)
             {
-                ReconciledBalance = ReconciledBalance - Amount;
                 ClearedBalance = ClearedBalance - Amount;
                 ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
                 //ActiveBook.CurrentLedger[WhichCheckInLedger].Cleared = true;
@@ -293,7 +297,6 @@ namespace CheckBook
             }
             else
             {
-                ReconciledBalance = ReconciledBalance + Amount;
                 ClearedBalance = ClearedBalance + Amount;
                 ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
                 //ActiveBook.CurrentLedger[WhichCheckInLedger].Cleared = false;
@@ -310,14 +313,12 @@ namespace CheckBook
             // if this deposit is cleared, add it to the uncleared balances
             if (!Deposits[WhichDeposit].Cleared)
             {
-                ReconciledBalance = ReconciledBalance + Amount;
                 ClearedBalance = ClearedBalance + Amount;
                 ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
                 Deposits[WhichDeposit].Cleared = true;
             }
             else
             {
-                ReconciledBalance = ReconciledBalance - Amount;
                 ClearedBalance = ClearedBalance - Amount;
                 ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
                 Deposits[WhichDeposit].Cleared = false;
@@ -352,39 +353,29 @@ namespace CheckBook
 
         private void EndingBalanceTextBox_Leave(object sender, EventArgs e)
         {
-            ComputeClearedBalance();
         }
 
 
 
-
-        private void ComputeClearedBalance ()
-        {
-            decimal EndingBalance = 0.00M;
-            decimal InterestEarned = 0.00M;
-            decimal BankFees = 0.00M;
-
-            if (EndingBalanceTextBox.Text.Length > 0)
-            {
-                Decimal.TryParse(EndingBalanceTextBox.Text, out EndingBalance);
-            }
-            if (InterestEarnedTextBox.Text.Length > 0)
-                Decimal.TryParse(InterestEarnedTextBox.Text, out InterestEarned);
-            if (BankFeesTextBox.Text.Length > 0)
-                Decimal.TryParse(BankFeesTextBox.Text, out BankFees);
-
-            ClearedBalance = ReconciledBalance - EndingBalance + InterestEarned - BankFees;
-            ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
-        }
 
         private void BankFeesTextBox_Leave(object sender, EventArgs e)
         {
-            ComputeClearedBalance();
+            decimal BankFees;
+            if (Decimal.TryParse(BankFeesTextBox.Text, out BankFees))
+            {
+                ClearedBalance = ClearedBalance - BankFees;
+                ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
+            }
         }
 
         private void InterestEarnedTextBox_Leave(object sender, EventArgs e)
         {
-            ComputeClearedBalance();
+            decimal InterestEarned;
+            if (Decimal.TryParse(InterestEarnedTextBox.Text, out InterestEarned))
+            {
+                ClearedBalance = ClearedBalance - InterestEarned;
+                ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
+            }
         }
 
     }

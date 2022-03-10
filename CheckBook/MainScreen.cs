@@ -100,7 +100,13 @@ namespace CheckBook
                 ATF.ShowDialog();
                 if (ATF.newEntry)
                 {
-                    ActiveBook.CurrentLedger.Add(ATF.tEntry);
+                    if (ATF.tEntry.When < ActiveBook.CurrentLedger[ActiveBook.CurrentLedger.Count - 1].When)
+                    {
+                        ActiveBook.InsertTransaction(ATF.tEntry);
+                    }
+                    else
+                        ActiveBook.CurrentLedger.Add(ATF.tEntry);
+
                     ledgerDataGridView.DataSource = null;
                     ledgerDataGridView.DataSource = ActiveBook.CurrentLedger;
                     ledgerDataGridView.AutoResizeColumns();

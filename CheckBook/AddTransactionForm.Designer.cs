@@ -48,6 +48,7 @@ namespace CheckBook
             this.DetailDataGridView = new System.Windows.Forms.DataGridView();
             this.DoneButton = new System.Windows.Forms.Button();
             this.DetailInputPanel = new System.Windows.Forms.Panel();
+            this.DeleteButton = new System.Windows.Forms.Button();
             this.ItemCancelButton = new System.Windows.Forms.Button();
             this.ItemClearButton = new System.Windows.Forms.Button();
             this.ItemAmountTextBox = new System.Windows.Forms.TextBox();
@@ -56,7 +57,6 @@ namespace CheckBook
             this.TransactionDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.DetailTotalLabel = new System.Windows.Forms.Label();
             this.DetailTotalTextBox = new System.Windows.Forms.TextBox();
-            this.DeleteButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DetailDataGridView)).BeginInit();
             this.DetailInputPanel.SuspendLayout();
             this.SuspendLayout();
@@ -98,6 +98,7 @@ namespace CheckBook
             this.ToWhomTextBox.Size = new System.Drawing.Size(261, 23);
             this.ToWhomTextBox.TabIndex = 4;
             this.ToWhomTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ToWhomTextBox_KeyPress);
+            this.ToWhomTextBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ToWhomTextBox_PreviewKeyDown);
             // 
             // label3
             // 
@@ -256,6 +257,16 @@ namespace CheckBook
             this.DetailInputPanel.TabIndex = 20;
             this.DetailInputPanel.Visible = false;
             // 
+            // DeleteButton
+            // 
+            this.DeleteButton.Location = new System.Drawing.Point(457, 156);
+            this.DeleteButton.Name = "DeleteButton";
+            this.DeleteButton.Size = new System.Drawing.Size(75, 23);
+            this.DeleteButton.TabIndex = 5;
+            this.DeleteButton.Text = "Delete";
+            this.DeleteButton.UseVisualStyleBackColor = true;
+            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
+            // 
             // ItemCancelButton
             // 
             this.ItemCancelButton.Location = new System.Drawing.Point(339, 97);
@@ -332,16 +343,6 @@ namespace CheckBook
             this.DetailTotalTextBox.Size = new System.Drawing.Size(100, 23);
             this.DetailTotalTextBox.TabIndex = 23;
             this.DetailTotalTextBox.Visible = false;
-            // 
-            // DeleteButton
-            // 
-            this.DeleteButton.Location = new System.Drawing.Point(457, 156);
-            this.DeleteButton.Name = "DeleteButton";
-            this.DeleteButton.Size = new System.Drawing.Size(75, 23);
-            this.DeleteButton.TabIndex = 5;
-            this.DeleteButton.Text = "Delete";
-            this.DeleteButton.UseVisualStyleBackColor = true;
-            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
             // AddTransactionForm
             // 
