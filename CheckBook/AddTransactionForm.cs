@@ -98,6 +98,7 @@ namespace CheckBook
                 if (MatchedName != null)
                 {
                     ToWhomTextBox.Text = MatchedName.ToString();
+                    MatchingListBox.Visible = false;
                 }
             }
         }
@@ -403,6 +404,9 @@ namespace CheckBook
                     DetailSubTotal = DetailSubTotal + subDecimal;
             }
             DetailTotalTextBox.Text = DetailSubTotal.ToString();
+            DetailTotalLabel.Visible = true;
+            DetailTotalTextBox.Visible = true;
+            DetailTotalTextBox.ReadOnly = true;
         }
 
 
