@@ -174,6 +174,7 @@ namespace CheckBook
                     CurrentLedger[LedgerEntryNumber].Amount = 0.00M;
                     CurrentLedger[LedgerEntryNumber].Debit = 0.00M;
                     CurrentLedger[LedgerEntryNumber].Credit = 0.00M;
+                    CurrentLedger[LedgerEntryNumber].Cleared = true;
                     if (LedgerEntryNumber > 1)
                         CurrentLedger[LedgerEntryNumber].Balance = CurrentLedger[LedgerEntryNumber - 1].Balance;
                     else
