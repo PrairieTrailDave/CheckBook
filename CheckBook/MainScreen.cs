@@ -21,7 +21,7 @@ namespace CheckBook
     public partial class MainScreen : Form
     {
         public MyCheckbook ActiveBook;
-
+        string CurrentActiveFile;
 
         public MainScreen()
         {
@@ -29,6 +29,7 @@ namespace CheckBook
             ActiveBook = new MyCheckbook();
             ActiveBook.Accounts = new List<AccountCategory>();
             ActiveBook.CurrentLedger = new List<LedgerEntry>();
+            CurrentActiveFile = "";
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -40,6 +41,7 @@ namespace CheckBook
                 this.UseWaitCursor = true;
                 Application.DoEvents();
                 ReadDataFile(openBKFileDialog.FileName);
+                CurrentActiveFile = openBKFileDialog.FileName;
                 ledgerDataGridView.DataSource = ActiveBook.CurrentLedger;
                 ledgerDataGridView.AutoResizeColumns();
                 ledgerDataGridView.FirstDisplayedScrollingRowIndex = ledgerDataGridView.RowCount - 1;
@@ -60,6 +62,7 @@ namespace CheckBook
             saveBKFileDialog.AddExtension = true;
             saveBKFileDialog.DefaultExt = "csv";
             saveBKFileDialog.Filter = "CheckBook files (*.csv)|*.csv|All files (*.*)|*.*";
+            saveBKFileDialog.FileName = CurrentActiveFile;
             if (saveBKFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Cursor = Cursors.WaitCursor;
@@ -156,6 +159,28 @@ namespace CheckBook
 
         }
 
+        private void voidTransactionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ActiveBook.CurrentLedger.Count > 0)
+            {
+                if (MessageBox.Show("Are you sure you want to void a transaction?", "Are you sure", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    VoidTransactionForm VTF = new VoidTransactionForm();
+                    VTF.ActiveBook = ActiveBook;
+                    VTF.ShowDialog();
+
+                    // redisplay the ledger
+                    ledgerDataGridView.DataSource = null;
+                    ledgerDataGridView.DataSource = ActiveBook.CurrentLedger;
+                    ledgerDataGridView.AutoResizeColumns();
+                    ledgerDataGridView.FirstDisplayedScrollingRowIndex = ledgerDataGridView.RowCount - 1;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please load a checkbook first");
+            }
+        }
 
 
 
@@ -246,7 +271,6 @@ namespace CheckBook
                     }
                 }
             }
-
         }
 
 

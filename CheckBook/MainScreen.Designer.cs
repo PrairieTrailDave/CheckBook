@@ -41,6 +41,7 @@ namespace CheckBook
             this.addTransactionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reconcileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.voidTransactionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.ledgerDataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -49,7 +50,7 @@ namespace CheckBook
             // 
             this.ledgerDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ledgerDataGridView.Location = new System.Drawing.Point(25, 28);
-            this.ledgerDataGridView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ledgerDataGridView.Margin = new System.Windows.Forms.Padding(2);
             this.ledgerDataGridView.Name = "ledgerDataGridView";
             this.ledgerDataGridView.RowHeadersWidth = 62;
             this.ledgerDataGridView.RowTemplate.Height = 33;
@@ -71,7 +72,8 @@ namespace CheckBook
             this.fileToolStripMenuItem,
             this.addTransactionToolStripMenuItem,
             this.reconcileToolStripMenuItem,
-            this.reportToolStripMenuItem});
+            this.reportToolStripMenuItem,
+            this.voidTransactionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
@@ -132,6 +134,13 @@ namespace CheckBook
             this.reportToolStripMenuItem.Text = "Report";
             this.reportToolStripMenuItem.Click += new System.EventHandler(this.reportToolStripMenuItem_Click);
             // 
+            // voidTransactionToolStripMenuItem
+            // 
+            this.voidTransactionToolStripMenuItem.Name = "voidTransactionToolStripMenuItem";
+            this.voidTransactionToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.voidTransactionToolStripMenuItem.Text = "Void Transaction";
+            this.voidTransactionToolStripMenuItem.Click += new System.EventHandler(this.voidTransactionToolStripMenuItem_Click);
+            // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -140,7 +149,7 @@ namespace CheckBook
             this.Controls.Add(this.ledgerDataGridView);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainScreen";
             this.Text = "Check Book Program";
             ((System.ComponentModel.ISupportInitialize)(this.ledgerDataGridView)).EndInit();
@@ -165,6 +174,7 @@ namespace CheckBook
         private System.Windows.Forms.ToolStripMenuItem addTransactionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reconcileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem voidTransactionToolStripMenuItem;
     }
 }
 

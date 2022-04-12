@@ -160,6 +160,28 @@ namespace CheckBook
                 }
             }
         }
+
+        public void VoidThisTransaction (int LedgerEntryNumber)
+        {
+            // only act if there are any transactions in the ledger
+
+            if (CurrentLedger.Count > 0)
+            {
+                // and only if this is a valid entry
+
+                if (LedgerEntryNumber < CurrentLedger.Count)
+                {
+                    CurrentLedger[LedgerEntryNumber].Amount = 0.00M;
+                    CurrentLedger[LedgerEntryNumber].Debit = 0.00M;
+                    CurrentLedger[LedgerEntryNumber].Credit = 0.00M;
+                    if (LedgerEntryNumber > 1)
+                        CurrentLedger[LedgerEntryNumber].Balance = CurrentLedger[LedgerEntryNumber - 1].Balance;
+                    else
+                        CurrentLedger[LedgerEntryNumber].Balance = 0.00M;
+                    UpdateFollowingTransactionBalances(LedgerEntryNumber);
+                }
+            }
+        }
         private void UpdateFollowingTransactionBalances(int startingPoint)
         {
             int LIndex = startingPoint + 1;
