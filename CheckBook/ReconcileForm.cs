@@ -373,7 +373,7 @@ namespace CheckBook
             decimal InterestEarned;
             if (Decimal.TryParse(InterestEarnedTextBox.Text, out InterestEarned))
             {
-                ClearedBalance = ClearedBalance - InterestEarned;
+                ClearedBalance = ClearedBalance + InterestEarned;
                 ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
             }
         }
