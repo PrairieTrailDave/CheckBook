@@ -69,6 +69,7 @@ namespace CheckBook
                 Application.DoEvents();
                 SaveDataFile(saveBKFileDialog.FileName);
                 Cursor = Cursors.Default;
+                MessageBox.Show("File Saved");
             }
         }
 

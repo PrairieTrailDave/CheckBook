@@ -180,6 +180,15 @@ namespace CheckBook
 
         }
 
+        private void ChangeTransactionValueButton_Click(object sender, EventArgs e)
+        {
+            ChangeTransactionValueForm CTF = new ChangeTransactionValueForm();
+            CTF.ActiveBook = ActiveBook;
+            CTF.ShowDialog();
+            LoadGrids();
+            ShowChecksAndDeposits();
+        }
+
 
         private void LoadGrids()
         {
@@ -294,6 +303,9 @@ namespace CheckBook
                 ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
                 //ActiveBook.CurrentLedger[WhichCheckInLedger].Cleared = true;
                 Checks[WhichCheckOnScreen].Cleared = true;
+                ChecksDataGridView.Rows[WhichCheckOnScreen].Cells[0].Value = true;
+                ChecksDataGridView.RefreshEdit();
+                ChecksDataGridView.Refresh();
             }
             else
             {
@@ -301,6 +313,9 @@ namespace CheckBook
                 ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
                 //ActiveBook.CurrentLedger[WhichCheckInLedger].Cleared = false;
                 Checks[WhichCheckOnScreen].Cleared = false;
+                ChecksDataGridView.Rows[WhichCheckOnScreen].Cells[0].Value = false;
+                ChecksDataGridView.RefreshEdit();
+                ChecksDataGridView.Refresh();
             }
         }
 
@@ -316,12 +331,18 @@ namespace CheckBook
                 ClearedBalance = ClearedBalance + Amount;
                 ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
                 Deposits[WhichDeposit].Cleared = true;
+                DepositsDataGridView.Rows[WhichDeposit].Cells[0].Value = true;
+                DepositsDataGridView.RefreshEdit();
+                DepositsDataGridView.Refresh();
             }
             else
             {
                 ClearedBalance = ClearedBalance - Amount;
                 ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
                 Deposits[WhichDeposit].Cleared = false;
+                DepositsDataGridView.Rows[WhichDeposit].Cells[0].Value = false;
+                DepositsDataGridView.RefreshEdit();
+                DepositsDataGridView.Refresh();
             }
 
         }
@@ -377,6 +398,7 @@ namespace CheckBook
                 ClearedBalanceTextBox.Text = ClearedBalance.ToString("C");
             }
         }
+
 
     }
 }
