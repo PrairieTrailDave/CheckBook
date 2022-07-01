@@ -92,7 +92,7 @@ namespace CheckBook
             {
                 string MatchedName = (from ch in ActiveBook.CurrentLedger
                                        where ch.ToWhom.ToUpper().StartsWith((ToWhomTextBox.Text).ToUpper())
-                                          && ch.When.AddYears(1) > DateTime.Now
+                                          && ch.When.AddYears(2) > DateTime.Now
                                        orderby ch.ToWhom
                                        select ch.ToWhom).Distinct().FirstOrDefault();
                 if (MatchedName != null)
