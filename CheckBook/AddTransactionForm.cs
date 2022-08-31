@@ -90,16 +90,7 @@ namespace CheckBook
         {
             if (e.KeyCode == Keys.Tab)
             {
-                string MatchedName = (from ch in ActiveBook.CurrentLedger
-                                       where ch.ToWhom.ToUpper().StartsWith((ToWhomTextBox.Text).ToUpper())
-                                          && ch.When.AddYears(2) > DateTime.Now
-                                       orderby ch.ToWhom
-                                       select ch.ToWhom).Distinct().FirstOrDefault();
-                if (MatchedName != null)
-                {
-                    ToWhomTextBox.Text = MatchedName.ToString();
-                    MatchingListBox.Visible = false;
-                }
+                MatchingListBox_Click(MatchingListBox, e);
             }
         }
 
@@ -364,7 +355,10 @@ namespace CheckBook
                 DataGridViewRow tRow = DetailDataGridView.Rows[CurrentDetailRow];
                 tRow.Cells[0].Value = CategoryListBox.SelectedItem;
                 tRow.Cells[1].Value = ItemNotesTextBox.Text;
-                tRow.Cells[2].Value = Decimal.Parse(ItemAmountTextBox.Text);
+                tRow.Cells[2].Value = 0.00M;
+                decimal itemamount;
+                if (Decimal.TryParse(ItemAmountTextBox.Text, out itemamount))
+                    tRow.Cells[2].Value = Decimal.Parse(ItemAmountTextBox.Text);
 
 
                 ShowCurrentSubTotal();
