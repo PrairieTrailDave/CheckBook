@@ -90,7 +90,8 @@ namespace CheckBook
         {
             if (e.KeyCode == Keys.Tab)
             {
-                MatchingListBox_Click(MatchingListBox, e);
+                if (MatchingListBox.Visible)
+                    MatchingListBox_Click(MatchingListBox, e);
             }
         }
 
