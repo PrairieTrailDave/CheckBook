@@ -408,6 +408,7 @@ namespace CheckBook
         private void DoneButton_Click(object sender, EventArgs e)
         {
             decimal CheckAmount;
+            decimal ResultingBalance = 0.00M;
 
             // someone can press the done key without entering a value 
             // because we used the value from the prior transaction
@@ -421,7 +422,8 @@ namespace CheckBook
                         Decimal.TryParse(DepositTextBox.Text, out TransactionCredit);
                     else
                         Decimal.TryParse(DepositTextBox.Text.Substring(1), out TransactionCredit);
-                    CurrentBalanceTextBox.Text = (PriorBalance + TransactionCredit).ToString("C");
+                    ResultingBalance = PriorBalance + TransactionCredit;
+                    CurrentBalanceTextBox.Text = ResultingBalance.ToString("C");
                 }
                 if (CheckAmountTextBox.Text.Length > 0)
                 {
@@ -429,8 +431,14 @@ namespace CheckBook
                         Decimal.TryParse(CheckAmountTextBox.Text, out TransactionDebit);
                     else
                         Decimal.TryParse(CheckAmountTextBox.Text.Substring(1), out TransactionDebit);
-                    CurrentBalanceTextBox.Text = (PriorBalance + TransactionCredit - TransactionDebit).ToString("C");
+                    ResultingBalance = PriorBalance + TransactionCredit - TransactionDebit;
+                    CurrentBalanceTextBox.Text = ResultingBalance.ToString("C");
                 }
+            }
+            else
+            {
+                ResultingBalance = PriorBalance + TransactionCredit - TransactionDebit;
+                CurrentBalanceTextBox.Text = ResultingBalance.ToString("C");
             }
 
             if (TransactionDebit == 0.00M)
@@ -460,12 +468,6 @@ namespace CheckBook
                     }
                 }
             }
-            Decimal tBalance;
-            if (!Decimal.TryParse(CurrentBalanceTextBox.Text.Substring(1), out tBalance))
-            {
-                MessageBox.Show("Invalid balance");
-                return;
-            }
 
             tEntry = new LedgerEntry
             {
@@ -475,7 +477,7 @@ namespace CheckBook
                 Cleared = false,
                 Debit = TransactionDebit,
                 Credit = TransactionCredit,
-                Balance = tBalance,
+                Balance = ResultingBalance,
                 Amount = CheckAmount,
                 Account = (string)CategoriesComboBox.SelectedItem,
                 SubAccounts = tSubAccounts
