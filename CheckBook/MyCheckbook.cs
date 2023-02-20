@@ -50,7 +50,7 @@ namespace CheckBook
                 {
                     newEntry.Balance = CurrentLedger[LedgerIndex-1].Balance + newEntry.Credit - newEntry.Debit;
                     CurrentLedger.Add(newEntry);
-                    return CurrentLedger.Count-1;
+                    return newEntry.ID;
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace CheckBook
                         newEntry.Balance = CurrentLedger[LedgerIndex - 1].Balance + newEntry.Credit - newEntry.Debit;
                         CurrentLedger.Insert(LedgerIndex, newEntry);
                         UpdateFollowingTransactionBalances(LedgerIndex);
-                        return LedgerIndex;
+                        return newEntry.ID;
                     }
                     else
                     {
@@ -105,14 +105,14 @@ namespace CheckBook
                                 {
                                     newEntry.Balance = CurrentLedger[secondIndex - 1].Balance + newEntry.Credit - newEntry.Debit;
                                     CurrentLedger.Add(newEntry);
-                                    return CurrentLedger.Count-1;
+                                    return newEntry.ID;
                                 }
                                 else
                                 {
                                     newEntry.Balance = CurrentLedger[secondIndex - 1].Balance + newEntry.Credit - newEntry.Debit;
                                     CurrentLedger.Insert(secondIndex, newEntry);
                                     UpdateFollowingTransactionBalances(secondIndex);
-                                    return secondIndex;
+                                    return newEntry.ID;
                                 }
 
                             }
@@ -142,26 +142,54 @@ namespace CheckBook
                             {
                                 newEntry.Balance = CurrentLedger[secondIndex - 1].Balance + newEntry.Credit - newEntry.Debit;
                                 CurrentLedger.Add(newEntry);
-                                return CurrentLedger.Count-1;
+                                return newEntry.ID;
                             }
                             else
                             {
                                 newEntry.Balance = CurrentLedger[secondIndex - 1].Balance + newEntry.Credit - newEntry.Debit;
                                 CurrentLedger.Insert(secondIndex, newEntry);
                                 UpdateFollowingTransactionBalances(secondIndex);
-                                return secondIndex;
+                                return newEntry.ID;
                             }
                         }
                     }
                     // don't think it should get here, but if it does, simply add to end
                     newEntry.Balance = newEntry.Credit - newEntry.Debit;
                     CurrentLedger.Add(newEntry);
-                    return CurrentLedger.Count-1;
+                    return newEntry.ID;
                 }
             }
         }
 
-        public void VoidThisTransaction (int LedgerEntryNumber)
+        public void VoidThisTransaction (int LedgerEntryID)
+        {
+            // only act if there are any transactions in the ledger
+
+            if (CurrentLedger.Count > 0)
+            {
+                // and only if this is a valid entry
+                
+                for(int EntryNumber = 0; EntryNumber < CurrentLedger.Count; EntryNumber++)
+                { 
+                    LedgerEntry LE = CurrentLedger[EntryNumber];
+                    if (LE.ID == LedgerEntryID)
+                    {
+                        CurrentLedger[EntryNumber].Amount = 0.00M;
+                        CurrentLedger[EntryNumber].Debit = 0.00M;
+                        CurrentLedger[EntryNumber].Credit = 0.00M;
+                        CurrentLedger[EntryNumber].Cleared = true;
+                        if (EntryNumber > 1)
+                            CurrentLedger[EntryNumber].Balance = CurrentLedger[EntryNumber - 1].Balance;
+                        else
+                            CurrentLedger[EntryNumber].Balance = 0.00M;
+                        UpdateFollowingTransactionBalances(EntryNumber);
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void UpdateThisTransaction(int LedgerEntryID, decimal NewValue)
         {
             // only act if there are any transactions in the ledger
 
@@ -169,51 +197,33 @@ namespace CheckBook
             {
                 // and only if this is a valid entry
 
-                if (LedgerEntryNumber < CurrentLedger.Count)
+                for (int EntryNumber = 0; EntryNumber < CurrentLedger.Count; EntryNumber++)
                 {
-                    CurrentLedger[LedgerEntryNumber].Amount = 0.00M;
-                    CurrentLedger[LedgerEntryNumber].Debit = 0.00M;
-                    CurrentLedger[LedgerEntryNumber].Credit = 0.00M;
-                    CurrentLedger[LedgerEntryNumber].Cleared = true;
-                    if (LedgerEntryNumber > 1)
-                        CurrentLedger[LedgerEntryNumber].Balance = CurrentLedger[LedgerEntryNumber - 1].Balance;
-                    else
-                        CurrentLedger[LedgerEntryNumber].Balance = 0.00M;
-                    UpdateFollowingTransactionBalances(LedgerEntryNumber);
-                }
-            }
-        }
-
-        public void UpdateThisTransaction(int LedgerEntryNumber, decimal NewValue)
-        {
-            // only act if there are any transactions in the ledger
-
-            if (CurrentLedger.Count > 0)
-            {
-                // and only if this is a valid entry
-
-                if (LedgerEntryNumber < CurrentLedger.Count)
-                {
-                    if (CurrentLedger[LedgerEntryNumber].Debit > 0)
+                    LedgerEntry LE = CurrentLedger[EntryNumber];
+                    if (LE.ID == LedgerEntryID)
                     {
-                        CurrentLedger[LedgerEntryNumber].Amount = 0.00M - NewValue;
-                        CurrentLedger[LedgerEntryNumber].Debit = NewValue;
-                    }
-                    else
-                    {
-                        CurrentLedger[LedgerEntryNumber].Amount = NewValue;
-                        CurrentLedger[LedgerEntryNumber].Credit = NewValue;
-                    }
+                        if (CurrentLedger[EntryNumber].Debit > 0)
+                        {
+                            CurrentLedger[EntryNumber].Amount = 0.00M - NewValue;
+                            CurrentLedger[EntryNumber].Debit = NewValue;
+                        }
+                        else
+                        {
+                            CurrentLedger[EntryNumber].Amount = NewValue;
+                            CurrentLedger[EntryNumber].Credit = NewValue;
+                        }
 
-                    if (LedgerEntryNumber > 1)
-                        CurrentLedger[LedgerEntryNumber].Balance = CurrentLedger[LedgerEntryNumber - 1].Balance
-                                                                   + CurrentLedger[LedgerEntryNumber].Credit
-                                                                   - CurrentLedger[LedgerEntryNumber].Debit;
-                    else
-                        CurrentLedger[LedgerEntryNumber].Balance = 0.00M
-                                                                   + CurrentLedger[LedgerEntryNumber].Credit
-                                                                   - CurrentLedger[LedgerEntryNumber].Debit;
-                    UpdateFollowingTransactionBalances(LedgerEntryNumber);
+                        if (EntryNumber > 1)
+                            CurrentLedger[EntryNumber].Balance = CurrentLedger[EntryNumber - 1].Balance
+                                                                       + CurrentLedger[EntryNumber].Credit
+                                                                       - CurrentLedger[EntryNumber].Debit;
+                        else
+                            CurrentLedger[EntryNumber].Balance = 0.00M
+                                                                       + CurrentLedger[EntryNumber].Credit
+                                                                       - CurrentLedger[EntryNumber].Debit;
+                        UpdateFollowingTransactionBalances(EntryNumber);
+                        break;
+                    }
                 }
             }
         }

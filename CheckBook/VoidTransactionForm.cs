@@ -83,8 +83,8 @@ namespace CheckBook
                     
             if (MessageBox.Show(Message, "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                int LedgerEntryNumber = Entry.ListIndex;
-                ActiveBook.VoidThisTransaction(LedgerEntryNumber);
+                int LedgerEntryID = Entry.ListIndex;
+                ActiveBook.VoidThisTransaction(LedgerEntryID);
                 Entries.Remove(Entry);
                 ShowEntries();
             }

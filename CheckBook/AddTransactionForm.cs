@@ -43,17 +43,19 @@ namespace CheckBook
 
         private void AddTransactionForm_Activated(object sender, EventArgs e)
         {
-            // clear out what we are to return
-            tEntry = new LedgerEntry();
-            newEntry = false;
-            TransactionCredit = 0.00M;
-            TransactionDebit = 0.00M;
+
 
         }
 
 
         private void AddTransactionForm_Shown(object sender, EventArgs e)
         {
+            // clear out what we are to return
+            tEntry = new LedgerEntry();
+            newEntry = false;
+            TransactionCredit = 0.00M;
+            TransactionDebit = 0.00M;
+
             // load the forms 
 
             PriorBalance = ActiveBook.CurrentLedger[ActiveBook.CurrentLedger.Count - 1].Balance;
@@ -480,6 +482,7 @@ namespace CheckBook
                 Balance = ResultingBalance,
                 Amount = CheckAmount,
                 Account = (string)CategoriesComboBox.SelectedItem,
+                ID = ActiveBook.CurrentLedger.Count + 1,
                 SubAccounts = tSubAccounts
             };
 

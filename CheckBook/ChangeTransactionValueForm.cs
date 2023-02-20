@@ -110,10 +110,10 @@ namespace CheckBook
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            int LedgerEntryNumber = EntryToChange.ListIndex;
+            int LedgerEntryID = EntryToChange.ListIndex;
             decimal NewValue;
             Decimal.TryParse(NewValueTextBox.Text, out NewValue);
-            ActiveBook.UpdateThisTransaction(LedgerEntryNumber, NewValue);
+            ActiveBook.UpdateThisTransaction(LedgerEntryID, NewValue);
             UpdatePanel.Visible = false;
             NewValueTextBox.Text = "";
             LoadGrid();

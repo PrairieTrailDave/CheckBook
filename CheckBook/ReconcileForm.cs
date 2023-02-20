@@ -22,7 +22,7 @@ namespace CheckBook
             public string CheckNumber { get; set; }
             public string ToWhom { get; set; }
             public string Amount { get; set; }
-            public int ListIndex { get; set; }
+            public int ListID { get; set; }  // change this from the record number to the record ID
         }
         class DepositRow
         {
@@ -30,7 +30,7 @@ namespace CheckBook
             public string Date { get; set; }
             public string FromWhom { get; set; }
             public string Amount { get; set; }
-            public int ListIndex { get; set; }
+            public int ListID { get; set; }  // change this from the record number to the record ID
         }
 
 
@@ -92,9 +92,10 @@ namespace CheckBook
                             Cleared = true,
                             Debit = BankFees,
                             Amount = BankFees,
-                            Account = "Bank Fees"
+                            Account = "Bank Fees",
+                            ID = ActiveBook.CurrentLedger.Count + 1
                         };
-                        int newIndex = ActiveBook.InsertTransaction(FeesEntry);
+                        int newID = ActiveBook.InsertTransaction(FeesEntry);
                         Checks.Add(new ReconcileRow
                         {
                             Cleared = true,
@@ -102,7 +103,7 @@ namespace CheckBook
                             CheckNumber = "",
                             ToWhom = "Bank Fees",
                             Amount = BankFees.ToString("0.00"),
-                            ListIndex = newIndex
+                            ListID = newID
                         });
                     }
                 }
@@ -121,14 +122,14 @@ namespace CheckBook
                             Amount = Interest,
                             Account = "Interest Earned"
                         };
-                        int newIndex = ActiveBook.InsertTransaction(InterestEntry);
+                        int newID = ActiveBook.InsertTransaction(InterestEntry);
                         Deposits.Add(new DepositRow
                         {
                             Cleared = true,
                             Date = AddedChargesDate.ToShortDateString(),
                             FromWhom = "Interest Earned",
                             Amount = Interest.ToString("0.00"),
-                            ListIndex = newIndex
+                            ListID = newID
                         });
                     }
 
@@ -150,7 +151,7 @@ namespace CheckBook
             ATF.ShowDialog();
             if (ATF.newEntry)
             {
-                int newIndex = ActiveBook.InsertTransaction(ATF.tEntry);
+                int newID = ActiveBook.InsertTransaction(ATF.tEntry);
 
                 if (ATF.tEntry.Debit > 0.00M)
                 {
@@ -161,7 +162,7 @@ namespace CheckBook
                         CheckNumber = ATF.tEntry.CheckNumber,
                         ToWhom = ATF.tEntry.ToWhom,
                         Amount = ATF.tEntry.Debit.ToString("0.00"),
-                        ListIndex = newIndex
+                        ListID = newID
                     });
                 }
                 else
@@ -172,7 +173,7 @@ namespace CheckBook
                         Date = ATF.tEntry.When.ToShortDateString(),
                         FromWhom = ATF.tEntry.ToWhom,
                         Amount = ATF.tEntry.Credit.ToString("0.00"),
-                        ListIndex = newIndex
+                        ListID = newID
                     });
                 }
                 ShowChecksAndDeposits();
@@ -193,6 +194,7 @@ namespace CheckBook
         private void LoadGrids()
         {
             // pull out the unreconciled checks and get which item it is in the ledger
+            // the select (entry, index) => new { entry, index } gets the row number with the select
             Checks = (from ch in
                    (ActiveBook.CurrentLedger.Select((Ledger, LIndex) => new { Ledger, LIndex }))
                       where ch.Ledger.Cleared == false &&
@@ -204,7 +206,7 @@ namespace CheckBook
                           CheckNumber = ch.Ledger.CheckNumber,
                           ToWhom = ch.Ledger.ToWhom,
                           Amount = ch.Ledger.Debit.ToString("0.00"),
-                          ListIndex = ch.LIndex
+                          ListID = ch.Ledger.ID
                       }).ToList();
 
             // get the unreconciled deposits and the index into the ledger
@@ -218,7 +220,7 @@ namespace CheckBook
                             Date = ch.Ledger.When.ToShortDateString(),
                             FromWhom = ch.Ledger.ToWhom,
                             Amount = ch.Ledger.Credit.ToString("0.00"),
-                            ListIndex = ch.LIndex
+                            ListID = ch.Ledger.ID
                         }).ToList();
 
         }
@@ -265,15 +267,29 @@ namespace CheckBook
 
             foreach (ReconcileRow ch in Checks)
             {
-                int index = ch.ListIndex;
-                if (ch.Cleared != ActiveBook.CurrentLedger[index].Cleared)
-                    ActiveBook.CurrentLedger[index].Cleared = ch.Cleared;
+                int iD = ch.ListID;
+                for (int index = 0; index < ActiveBook.CurrentLedger.Count; index++)
+                {
+                    if (ActiveBook.CurrentLedger[index].ID == iD)
+                    {
+                        if (ch.Cleared != ActiveBook.CurrentLedger[index].Cleared)
+                            ActiveBook.CurrentLedger[index].Cleared = ch.Cleared;
+                        break;
+                    }
+                }
             }
             foreach (DepositRow dp in Deposits)
             {
-                int index = dp.ListIndex;
-                if (dp.Cleared != ActiveBook.CurrentLedger[index].Cleared)
-                    ActiveBook.CurrentLedger[index].Cleared = dp.Cleared;
+                int iD = dp.ListID;
+                for (int index = 0; index < ActiveBook.CurrentLedger.Count; index++)
+                {
+                    if (ActiveBook.CurrentLedger[index].ID == iD)
+                    {
+                        if (dp.Cleared != ActiveBook.CurrentLedger[index].Cleared)
+                            ActiveBook.CurrentLedger[index].Cleared = dp.Cleared;
+                        break;
+                    }
+                }
             }
             // close this window
             Close();
@@ -290,7 +306,7 @@ namespace CheckBook
         {
             int WhichCheckOnScreen = e.RowIndex;
             //int WhichCheckInLedger = (int)ChecksDataGridView.Rows[WhichCheckOnScreen].Cells[4].Value;
-            int WhichCheckInLedger = Checks[WhichCheckOnScreen].ListIndex;
+            int WhichCheckInLedger = Checks[WhichCheckOnScreen].ListID;
 
             decimal Amount = Decimal.Parse(Checks[WhichCheckOnScreen].Amount);
             //Decimal Amount = ActiveBook.CurrentLedger[WhichCheckInLedger].Debit;

@@ -11,6 +11,7 @@ namespace CheckBook
 {
     public class LedgerEntry
     {
+        public int ID { get; set; }
         public DateTime When { get; set; }
         public string CheckNumber { get; set; }
         public string ToWhom { get; set; }

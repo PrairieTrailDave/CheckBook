@@ -43,6 +43,7 @@ namespace CheckBook
                 ReadDataFile(openBKFileDialog.FileName);
                 CurrentActiveFile = openBKFileDialog.FileName;
                 ledgerDataGridView.DataSource = ActiveBook.CurrentLedger;
+                //ledgerDataGridView.Columns[0].Visible = false;
                 ledgerDataGridView.AutoResizeColumns();
                 ledgerDataGridView.FirstDisplayedScrollingRowIndex = ledgerDataGridView.RowCount - 1;
                 this.Cursor = Cursors.Default;
@@ -81,6 +82,7 @@ namespace CheckBook
                 Cursor = Cursors.WaitCursor;
                 LoadQuickenFile(openQuickenFileDialog.FileName);
                 ledgerDataGridView.DataSource = ActiveBook.CurrentLedger;
+                //ledgerDataGridView.Columns[0].Visible = false;
                 ledgerDataGridView.AutoResizeColumns();
                 ledgerDataGridView.FirstDisplayedScrollingRowIndex = ledgerDataGridView.RowCount - 1;
                 Cursor = Cursors.Default;
@@ -113,6 +115,7 @@ namespace CheckBook
 
                     ledgerDataGridView.DataSource = null;
                     ledgerDataGridView.DataSource = ActiveBook.CurrentLedger;
+                    //ledgerDataGridView.Columns[0].Visible = false;
                     ledgerDataGridView.AutoResizeColumns();
                     ledgerDataGridView.FirstDisplayedScrollingRowIndex = ledgerDataGridView.RowCount - 1;
 
@@ -135,6 +138,7 @@ namespace CheckBook
                 // redisplay the ledger
                 ledgerDataGridView.DataSource = null;
                 ledgerDataGridView.DataSource = ActiveBook.CurrentLedger;
+                //ledgerDataGridView.Columns[0].Visible = false;
                 ledgerDataGridView.AutoResizeColumns();
                 ledgerDataGridView.FirstDisplayedScrollingRowIndex = ledgerDataGridView.RowCount - 1;
             }
@@ -173,6 +177,7 @@ namespace CheckBook
                     // redisplay the ledger
                     ledgerDataGridView.DataSource = null;
                     ledgerDataGridView.DataSource = ActiveBook.CurrentLedger;
+                    //ledgerDataGridView.Columns[0].Visible = false;
                     ledgerDataGridView.AutoResizeColumns();
                     ledgerDataGridView.FirstDisplayedScrollingRowIndex = ledgerDataGridView.RowCount - 1;
                 }
@@ -223,6 +228,7 @@ namespace CheckBook
                     if (csvFile.Read())
                     {
                         csvFile.ReadHeader();
+                        int recordCount = 0;
                         while (csvFile.Read())
                         {
                             int FieldCount = csvFile.Parser.Count;
@@ -237,6 +243,8 @@ namespace CheckBook
                             LE.Balance = Decimal.Parse(csvFile.GetField(FieldID++));
                             LE.Amount = Decimal.Parse(csvFile.GetField(FieldID++));
                             LE.Account = csvFile.GetField(FieldID++);
+                            LE.ID = recordCount + 1;
+                            recordCount++;
                             
                             // if there are any sub categories, add them
                             if (!string.IsNullOrEmpty(csvFile.GetField(FieldID)))
@@ -307,6 +315,7 @@ namespace CheckBook
                             csvFile.WriteField(LE.Balance);
                             csvFile.WriteField(LE.Amount);
                             csvFile.WriteField(LE.Account);
+                            // we don't write out the internal ID
                             foreach (CategoryEntry CE in LE.SubAccounts)
                             {
                                 csvFile.WriteField(CE.AccountName);
@@ -356,6 +365,7 @@ namespace CheckBook
                                 LedgerEntry nEntry = ProcessLedger(QK);
                                 CurrentBalance = CurrentBalance + nEntry.Amount;
                                 nEntry.Balance = CurrentBalance;
+                                nEntry.ID = ActiveBook.CurrentLedger.Count + 1;
                                 ActiveBook.CurrentLedger.Add(nEntry);
 
                             } while (!QK.EndOfStream);
