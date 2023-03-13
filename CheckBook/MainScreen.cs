@@ -234,6 +234,11 @@ namespace CheckBook
                             int FieldCount = csvFile.Parser.Count;
                             int FieldID = 0;
                             LedgerEntry LE = new LedgerEntry();
+                            // temp code to read after latest bug
+                            //string fldContents = csvFile.GetField(FieldID);
+                            //DateTime TryDate;
+                            //if (!DateTime.TryParse(fldContents, out TryDate))
+                            //    FieldID++;
                             LE.When = DateTime.Parse(csvFile.GetField(FieldID++));
                             LE.CheckNumber = csvFile.GetField(FieldID++);
                             LE.ToWhom = csvFile.GetField(FieldID++);
@@ -298,12 +303,22 @@ namespace CheckBook
 
                 using (var csvFile = new CsvWriter(csvWriter, CultureInfo.InvariantCulture))
                 {
-                    csvFile.WriteHeader<LedgerEntry>();
+                    csvFile.WriteHeader<LedgerEntryWithoutID>();
                     csvFile.NextRecord();
                     foreach (LedgerEntry LE in ActiveBook.CurrentLedger)
                     {
                         if (LE.SubAccounts == null)
-                            csvFile.WriteRecord(LE);
+                        {
+                            csvFile.WriteField(LE.When);
+                            csvFile.WriteField(LE.CheckNumber);
+                            csvFile.WriteField(LE.ToWhom);
+                            csvFile.WriteField(LE.Cleared);
+                            csvFile.WriteField(LE.Debit);
+                            csvFile.WriteField(LE.Credit);
+                            csvFile.WriteField(LE.Balance);
+                            csvFile.WriteField(LE.Amount);
+                            csvFile.WriteField(LE.Account);
+                        }
                         else
                         {
                             csvFile.WriteField(LE.When);
