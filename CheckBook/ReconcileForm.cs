@@ -84,7 +84,7 @@ namespace CheckBook
                     decimal BankFees;
                     if (Decimal.TryParse(BankFeesTextBox.Text, out BankFees))
                     {
-                        LedgerEntry FeesEntry = new LedgerEntry
+                        LedgerEntry FeesEntry = new()
                         {
                             When = AddedChargesDate,
                             CheckNumber = "",
@@ -112,7 +112,7 @@ namespace CheckBook
                     decimal Interest;
                     if (Decimal.TryParse(InterestEarnedTextBox.Text, out Interest))
                     {
-                        LedgerEntry InterestEntry = new LedgerEntry
+                        LedgerEntry InterestEntry = new()
                         {
                             When = AddedChargesDate,
                             CheckNumber = "",
@@ -120,7 +120,8 @@ namespace CheckBook
                             Cleared = true,
                             Credit = Interest,
                             Amount = Interest,
-                            Account = "Interest Earned"
+                            Account = "Interest Earned",
+                            ID = ActiveBook.CurrentLedger.Count + 1
                         };
                         int newID = ActiveBook.InsertTransaction(InterestEntry);
                         Deposits.Add(new DepositRow
@@ -146,7 +147,7 @@ namespace CheckBook
         }
         private void AddMissingTransactionButton_Click(object sender, EventArgs e)
         {
-            AddTransactionForm ATF = new AddTransactionForm();
+            AddTransactionForm ATF = new();
             ATF.ActiveBook = ActiveBook;
             ATF.ShowDialog();
             if (ATF.newEntry)
@@ -183,7 +184,7 @@ namespace CheckBook
 
         private void ChangeTransactionValueButton_Click(object sender, EventArgs e)
         {
-            ChangeTransactionValueForm CTF = new ChangeTransactionValueForm();
+            ChangeTransactionValueForm CTF = new();
             CTF.ActiveBook = ActiveBook;
             CTF.ShowDialog();
             LoadGrids();
@@ -306,7 +307,7 @@ namespace CheckBook
         {
             int WhichCheckOnScreen = e.RowIndex;
             //int WhichCheckInLedger = (int)ChecksDataGridView.Rows[WhichCheckOnScreen].Cells[4].Value;
-            int WhichCheckInLedger = Checks[WhichCheckOnScreen].ListID;
+            //int WhichCheckInLedger = Checks[WhichCheckOnScreen].ListID;
 
             decimal Amount = Decimal.Parse(Checks[WhichCheckOnScreen].Amount);
             //Decimal Amount = ActiveBook.CurrentLedger[WhichCheckInLedger].Debit;

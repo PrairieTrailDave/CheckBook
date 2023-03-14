@@ -90,11 +90,11 @@ namespace CheckBook
         }
 
 
-        private void addTransactionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AddTransactionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ActiveBook.CurrentLedger.Count > 0)
             {
-                AddTransactionForm ATF = new AddTransactionForm();
+                AddTransactionForm ATF = new();
                 ATF.PriorBalance = ActiveBook.CurrentLedger[ActiveBook.CurrentLedger.Count - 1].Balance;
                 string LastCheckNumber = (from ch in ActiveBook.CurrentLedger
                                        where ch.CheckNumber.Length > 0
@@ -127,11 +127,11 @@ namespace CheckBook
             }
         }
 
-        private void reconcileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ReconcileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ActiveBook.CurrentLedger.Count > 0)
             {
-                ReconcileForm RTF = new ReconcileForm();
+                ReconcileForm RTF = new();
                 RTF.ActiveBook = ActiveBook;
                 RTF.ShowDialog();
                 // what to do on success?
@@ -149,11 +149,11 @@ namespace CheckBook
 
         }
 
-        private void reportToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ActiveBook.CurrentLedger.Count > 0)
             {
-                DetailReportForm DRF = new DetailReportForm();
+                DetailReportForm DRF = new();
                 DRF.ActiveBook = ActiveBook;
                 DRF.ShowDialog();
             }
@@ -164,13 +164,13 @@ namespace CheckBook
 
         }
 
-        private void voidTransactionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void VoidTransactionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ActiveBook.CurrentLedger.Count > 0)
             {
                 if (MessageBox.Show("Are you sure you want to void a transaction?", "Are you sure", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    VoidTransactionForm VTF = new VoidTransactionForm();
+                    VoidTransactionForm VTF = new();
                     VTF.ActiveBook = ActiveBook;
                     VTF.ShowDialog();
 
@@ -202,7 +202,7 @@ namespace CheckBook
             ActiveBook.Accounts = new List<AccountCategory>();
             ActiveBook.CurrentLedger = new List<LedgerEntry>();
 
-            using (StreamReader sr = new StreamReader(openBKFileDialog.FileName))
+            using (StreamReader sr = new StreamReader(FileName))
             {
                 CsvHelper.Configuration.CsvConfiguration config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture);
 
@@ -290,7 +290,7 @@ namespace CheckBook
 
         private void SaveDataFile (string FileName)
         {
-            using (StreamWriter csvWriter = new StreamWriter(FileName, false))
+            using (StreamWriter csvWriter = new(FileName, false))
             {
                 using (var csvFile = new CsvWriter(csvWriter, CultureInfo.InvariantCulture))
                 {
@@ -307,30 +307,17 @@ namespace CheckBook
                     csvFile.NextRecord();
                     foreach (LedgerEntry LE in ActiveBook.CurrentLedger)
                     {
-                        if (LE.SubAccounts == null)
+                        csvFile.WriteField(LE.When);
+                        csvFile.WriteField(LE.CheckNumber);
+                        csvFile.WriteField(LE.ToWhom);
+                        csvFile.WriteField(LE.Cleared);
+                        csvFile.WriteField(LE.Debit);
+                        csvFile.WriteField(LE.Credit);
+                        csvFile.WriteField(LE.Balance);
+                        csvFile.WriteField(LE.Amount);
+                        csvFile.WriteField(LE.Account);
+                        if (LE.SubAccounts != null)
                         {
-                            csvFile.WriteField(LE.When);
-                            csvFile.WriteField(LE.CheckNumber);
-                            csvFile.WriteField(LE.ToWhom);
-                            csvFile.WriteField(LE.Cleared);
-                            csvFile.WriteField(LE.Debit);
-                            csvFile.WriteField(LE.Credit);
-                            csvFile.WriteField(LE.Balance);
-                            csvFile.WriteField(LE.Amount);
-                            csvFile.WriteField(LE.Account);
-                        }
-                        else
-                        {
-                            csvFile.WriteField(LE.When);
-                            csvFile.WriteField(LE.CheckNumber);
-                            csvFile.WriteField(LE.ToWhom);
-                            csvFile.WriteField(LE.Cleared);
-                            csvFile.WriteField(LE.Debit);
-                            csvFile.WriteField(LE.Credit);
-                            csvFile.WriteField(LE.Balance);
-                            csvFile.WriteField(LE.Amount);
-                            csvFile.WriteField(LE.Account);
-                            // we don't write out the internal ID
                             foreach (CategoryEntry CE in LE.SubAccounts)
                             {
                                 csvFile.WriteField(CE.AccountName);
@@ -396,7 +383,7 @@ namespace CheckBook
 
         }
 
-        private AccountCategory ProcessCategory(StreamReader reader)
+        private static AccountCategory ProcessCategory(StreamReader reader)
         {
             AccountCategory nCategory = new AccountCategory();
             while (true)
@@ -477,9 +464,9 @@ namespace CheckBook
             }
             return nEntry;
         }
-        private DateTime ParseDateTime (string Line)
+        private static DateTime ParseDateTime (string Line)
         {
-            DateTime When = new DateTime();
+            DateTime When;
             int Month = 0;
             int Day = 0;
             int Year = 0;

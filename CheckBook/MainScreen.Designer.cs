@@ -118,28 +118,28 @@ namespace CheckBook
             this.addTransactionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
             this.addTransactionToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
             this.addTransactionToolStripMenuItem.Text = "&Add Transaction";
-            this.addTransactionToolStripMenuItem.Click += new System.EventHandler(this.addTransactionToolStripMenuItem_Click);
+            this.addTransactionToolStripMenuItem.Click += new System.EventHandler(this.AddTransactionToolStripMenuItem_Click);
             // 
             // reconcileToolStripMenuItem
             // 
             this.reconcileToolStripMenuItem.Name = "reconcileToolStripMenuItem";
             this.reconcileToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
             this.reconcileToolStripMenuItem.Text = "&Reconcile";
-            this.reconcileToolStripMenuItem.Click += new System.EventHandler(this.reconcileToolStripMenuItem_Click);
+            this.reconcileToolStripMenuItem.Click += new System.EventHandler(this.ReconcileToolStripMenuItem_Click);
             // 
             // reportToolStripMenuItem
             // 
             this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
             this.reportToolStripMenuItem.Size = new System.Drawing.Size(54, 22);
             this.reportToolStripMenuItem.Text = "Report";
-            this.reportToolStripMenuItem.Click += new System.EventHandler(this.reportToolStripMenuItem_Click);
+            this.reportToolStripMenuItem.Click += new System.EventHandler(this.ReportToolStripMenuItem_Click);
             // 
             // voidTransactionToolStripMenuItem
             // 
             this.voidTransactionToolStripMenuItem.Name = "voidTransactionToolStripMenuItem";
             this.voidTransactionToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
             this.voidTransactionToolStripMenuItem.Text = "Void Transaction";
-            this.voidTransactionToolStripMenuItem.Click += new System.EventHandler(this.voidTransactionToolStripMenuItem_Click);
+            this.voidTransactionToolStripMenuItem.Click += new System.EventHandler(this.VoidTransactionToolStripMenuItem_Click);
             // 
             // MainScreen
             // 
