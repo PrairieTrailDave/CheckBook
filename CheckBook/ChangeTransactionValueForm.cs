@@ -46,16 +46,16 @@ namespace CheckBook
         {
             // pull out the unreconciled entries and get which item it is in the ledger
             Entries = (from ch in
-                   (ActiveBook.CurrentLedger.Select((Ledger, LIndex) => new { Ledger, LIndex }))
-                       where ch.Ledger.Cleared == false
+                   ActiveBook.CurrentLedger
+                       where ch.Cleared == false
                        select new AvailableToChangeRow
                        {
-                           Cleared = ch.Ledger.Cleared,
-                           When = ch.Ledger.When,
-                           CheckNumber = ch.Ledger.CheckNumber,
-                           ToWhom = ch.Ledger.ToWhom,
-                           Amount = ch.Ledger.Debit.ToString("0.00"),
-                           ListIndex = ch.LIndex
+                           Cleared = ch.Cleared,
+                           When = ch.When,
+                           CheckNumber = ch.CheckNumber,
+                           ToWhom = ch.ToWhom,
+                           Amount = ch.Debit.ToString("0.00"),
+                           ListIndex = ch.ID
                        }).ToList();
 
 
