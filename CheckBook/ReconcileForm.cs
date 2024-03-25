@@ -84,15 +84,23 @@ namespace CheckBook
                     decimal BankFees;
                     if (Decimal.TryParse(BankFeesTextBox.Text, out BankFees))
                     {
+                        // find the account that is the default for bank fees
+                        AccountCategory BankFeesAccount = ActiveBook.Accounts.Where(ac => ac.BankFeesDefault == "Y").FirstOrDefault();
+                        if (BankFeesAccount == null)
+                        {
+                            BankFeesAccount = new()
+                            { Name = "Bank Chrg", Description = "Bank Fees" };
+                        }
+
                         LedgerEntry FeesEntry = new()
                         {
                             When = AddedChargesDate,
                             CheckNumber = "",
-                            ToWhom = "Bank Fees",
+                            ToWhom = BankFeesAccount.Description,
                             Cleared = true,
                             Debit = BankFees,
                             Amount = BankFees,
-                            Account = "Bank Fees",
+                            Account = BankFeesAccount.Name,
                             ID = ActiveBook.CurrentLedger.Count + 1
                         };
                         int newID = ActiveBook.InsertTransaction(FeesEntry);
@@ -101,7 +109,7 @@ namespace CheckBook
                             Cleared = true,
                             When = AddedChargesDate,
                             CheckNumber = "",
-                            ToWhom = "Bank Fees",
+                            ToWhom = BankFeesAccount.Description,
                             Amount = BankFees.ToString("0.00"),
                             ListID = newID
                         });
@@ -112,15 +120,23 @@ namespace CheckBook
                     decimal Interest;
                     if (Decimal.TryParse(InterestEarnedTextBox.Text, out Interest))
                     {
+                        // find the account that is the default for interest earned
+                        AccountCategory InterestAccount = ActiveBook.Accounts.Where(ac => ac.InterestIncomeDefault == "Y").FirstOrDefault();
+                        if (InterestAccount == null) 
+                        { 
+                            InterestAccount = new AccountCategory();
+                            InterestAccount.Name = "Int Inc";
+                            InterestAccount.Description = "Interest Earned";
+                        }
                         LedgerEntry InterestEntry = new()
                         {
                             When = AddedChargesDate,
                             CheckNumber = "",
-                            ToWhom = "Interest Earned",
+                            ToWhom = InterestAccount.Description,
                             Cleared = true,
                             Credit = Interest,
                             Amount = Interest,
-                            Account = "Interest Earned",
+                            Account = InterestAccount.Name,
                             ID = ActiveBook.CurrentLedger.Count + 1
                         };
                         int newID = ActiveBook.InsertTransaction(InterestEntry);
@@ -128,7 +144,7 @@ namespace CheckBook
                         {
                             Cleared = true,
                             Date = AddedChargesDate.ToShortDateString(),
-                            FromWhom = "Interest Earned",
+                            FromWhom = InterestAccount.Description,
                             Amount = Interest.ToString("0.00"),
                             ListID = newID
                         });
