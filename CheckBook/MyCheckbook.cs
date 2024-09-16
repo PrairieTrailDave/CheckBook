@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,8 +12,39 @@ namespace CheckBook
 {
     public class MyCheckbook
     {
+        // Storage of the checkbook ledger
         public List<LedgerEntry> CurrentLedger { get; set; }
         public List<AccountCategory> Accounts { get; set; }
+
+        private bool Changed;
+
+
+
+
+        // Methods
+
+        public MyCheckbook() 
+        { 
+            Changed = false; // always start a new checkbook as unchanged
+        }
+
+
+
+        // Methods for managing if changed
+
+        public bool IfChanged()
+        {
+            return Changed;
+        }
+        public void HasChanged() { Changed = true; }
+        public void ClearChanged()
+        {
+            Changed = false;
+        }
+
+
+
+        // methods for managing entries in the ledger
 
         public int InsertTransaction (LedgerEntry newEntry)
         {
@@ -23,6 +55,7 @@ namespace CheckBook
             {
                 newEntry.Balance = newEntry.Credit - newEntry.Debit;
                 CurrentLedger.Add(newEntry);
+                HasChanged();
                 return CurrentLedger.Count-1;
             }
             else
@@ -50,6 +83,7 @@ namespace CheckBook
                 {
                     newEntry.Balance = CurrentLedger[LedgerIndex-1].Balance + newEntry.Credit - newEntry.Debit;
                     CurrentLedger.Add(newEntry);
+                    HasChanged();
                     return newEntry.ID;
                 }
                 else
@@ -62,6 +96,7 @@ namespace CheckBook
                         newEntry.Balance = CurrentLedger[LedgerIndex - 1].Balance + newEntry.Credit - newEntry.Debit;
                         CurrentLedger.Insert(LedgerIndex, newEntry);
                         UpdateFollowingTransactionBalances(LedgerIndex);
+                        HasChanged();
                         return newEntry.ID;
                     }
                     else
@@ -105,6 +140,7 @@ namespace CheckBook
                                 {
                                     newEntry.Balance = CurrentLedger[secondIndex - 1].Balance + newEntry.Credit - newEntry.Debit;
                                     CurrentLedger.Add(newEntry);
+                                    HasChanged();
                                     return newEntry.ID;
                                 }
                                 else
@@ -112,6 +148,7 @@ namespace CheckBook
                                     newEntry.Balance = CurrentLedger[secondIndex - 1].Balance + newEntry.Credit - newEntry.Debit;
                                     CurrentLedger.Insert(secondIndex, newEntry);
                                     UpdateFollowingTransactionBalances(secondIndex);
+                                    HasChanged();
                                     return newEntry.ID;
                                 }
 
@@ -142,6 +179,7 @@ namespace CheckBook
                             {
                                 newEntry.Balance = CurrentLedger[secondIndex - 1].Balance + newEntry.Credit - newEntry.Debit;
                                 CurrentLedger.Add(newEntry);
+                                HasChanged();
                                 return newEntry.ID;
                             }
                             else
@@ -149,6 +187,7 @@ namespace CheckBook
                                 newEntry.Balance = CurrentLedger[secondIndex - 1].Balance + newEntry.Credit - newEntry.Debit;
                                 CurrentLedger.Insert(secondIndex, newEntry);
                                 UpdateFollowingTransactionBalances(secondIndex);
+                                HasChanged();
                                 return newEntry.ID;
                             }
                         }
@@ -156,10 +195,46 @@ namespace CheckBook
                     // don't think it should get here, but if it does, simply add to end
                     newEntry.Balance = newEntry.Credit - newEntry.Debit;
                     CurrentLedger.Add(newEntry);
+                    HasChanged();
                     return newEntry.ID;
                 }
             }
         }
+
+        public void ReconcileThisCheck(int iD, bool CheckClearedFlag)
+        {
+            for (int index = 0; index < CurrentLedger.Count; index++)
+            {
+                if (CurrentLedger[index].ID == iD)
+                {
+                    if (CheckClearedFlag != CurrentLedger[index].Cleared)
+                    {
+                        CurrentLedger[index].Cleared = CheckClearedFlag;
+                        HasChanged();
+                    }
+                    break;
+                }
+            }
+        }
+
+        public void ReconcileThisDeposit(int iD, bool DepositClearedFlag)
+        {
+            for (int index = 0; index < CurrentLedger.Count; index++)
+            {
+                if (CurrentLedger[index].ID == iD)
+                {
+                    if (DepositClearedFlag != CurrentLedger[index].Cleared)
+                    {
+                        CurrentLedger[index].Cleared = DepositClearedFlag;
+                        HasChanged();
+                    }
+                    break;
+                }
+            }
+
+        }
+
+
 
         public void VoidThisTransaction (int LedgerEntryID)
         {
@@ -183,6 +258,7 @@ namespace CheckBook
                         else
                             CurrentLedger[EntryNumber].Balance = 0.00M;
                         UpdateFollowingTransactionBalances(EntryNumber);
+                        HasChanged();
                         break;
                     }
                 }
@@ -222,6 +298,7 @@ namespace CheckBook
                                                                        + CurrentLedger[EntryNumber].Credit
                                                                        - CurrentLedger[EntryNumber].Debit;
                         UpdateFollowingTransactionBalances(EntryNumber);
+                        HasChanged();
                         break;
                     }
                 }

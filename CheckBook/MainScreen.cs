@@ -32,23 +32,33 @@ namespace CheckBook
             CurrentActiveFile = "";
         }
 
+
+        // Events which happen at the main screen level
+        // When first shown
+        private void MainScreen_Shown(object sender, EventArgs e)
+        {
+            OpenTheDataFile();
+        }
+
+        private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (ActiveBook.IfChanged())
+            {
+                if (MessageBox.Show("The file has changed. Do you really want to close without saving?", "Dirty File", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+
+
+
+
+
+
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openBKFileDialog.Filter = "CheckBook files (*.csv)|*.csv|All files (*.*)|*.*";
-
-            if (openBKFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                this.UseWaitCursor = true;
-                Application.DoEvents();
-                ReadDataFile(openBKFileDialog.FileName);
-                CurrentActiveFile = openBKFileDialog.FileName;
-                ledgerDataGridView.DataSource = ActiveBook.CurrentLedger;
-                //ledgerDataGridView.Columns[0].Visible = false;
-                ledgerDataGridView.AutoResizeColumns();
-                ledgerDataGridView.FirstDisplayedScrollingRowIndex = ledgerDataGridView.RowCount - 1;
-                this.Cursor = Cursors.Default;
-                this.UseWaitCursor = false;
-            }
+            OpenTheDataFile();
         }
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -97,10 +107,10 @@ namespace CheckBook
                 AddTransactionForm ATF = new();
                 ATF.PriorBalance = ActiveBook.CurrentLedger[ActiveBook.CurrentLedger.Count - 1].Balance;
                 string LastCheckNumber = (from ch in ActiveBook.CurrentLedger
-                                       where ch.CheckNumber.Length > 0
-                                          && Char.IsDigit(ch.CheckNumber[0])
-                                       orderby ch.CheckNumber descending
-                                       select ch.CheckNumber).First();
+                                          where ch.CheckNumber.Length > 0
+                                             && Char.IsDigit(ch.CheckNumber[0])
+                                          orderby ch.CheckNumber descending
+                                          select ch.CheckNumber).First();
                 ATF.LastCheckNumber = Int32.Parse(LastCheckNumber);
                 ATF.ActiveBook = ActiveBook;
                 ATF.ShowDialog();
@@ -195,8 +205,35 @@ namespace CheckBook
 
 
 
+        // Support Routines
 
-        private void ReadDataFile (string FileName)
+        private void OpenTheDataFile()
+        {
+            try
+            {
+                openBKFileDialog.Filter = "CheckBook files (*.csv)|*.csv|All files (*.*)|*.*";
+
+                if (openBKFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.UseWaitCursor = true;
+                    Application.DoEvents();
+                    ReadDataFile(openBKFileDialog.FileName);
+                    CurrentActiveFile = openBKFileDialog.FileName;
+                    ledgerDataGridView.DataSource = ActiveBook.CurrentLedger;
+                    //ledgerDataGridView.Columns[0].Visible = false;
+                    ledgerDataGridView.AutoResizeColumns();
+                    ledgerDataGridView.FirstDisplayedScrollingRowIndex = ledgerDataGridView.RowCount - 1;
+                    this.Cursor = Cursors.Default;
+                    this.UseWaitCursor = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void ReadDataFile(string FileName)
         {
             ActiveBook = new MyCheckbook();
             ActiveBook.Accounts = new List<AccountCategory>();
@@ -217,9 +254,9 @@ namespace CheckBook
                     {
                         csvFile.ReadHeader();
                         while (csvFile.Read())
-                        {                            
+                        {
                             string test = csvFile.GetField(0).Trim();
-                            if (test == "AccountsEnd") 
+                            if (test == "AccountsEnd")
                                 break;
                             ActiveBook.Accounts.Add(csvFile.GetRecord<AccountCategory>());
                         }
@@ -250,7 +287,7 @@ namespace CheckBook
                             LE.Account = csvFile.GetField(FieldID++);
                             LE.ID = recordCount + 1;
                             recordCount++;
-                            
+
                             // if there are any sub categories, add them
                             if (!string.IsNullOrEmpty(csvFile.GetField(FieldID)))
                             {
@@ -274,7 +311,7 @@ namespace CheckBook
                                     }
                                     else
                                     {
-                                        MessageBox.Show("Invalid amount in subcategory, column#:", (FieldID-1).ToString());
+                                        MessageBox.Show("Invalid amount in subcategory, column#:", (FieldID - 1).ToString());
                                         break;
                                     }
                                 }
@@ -288,7 +325,7 @@ namespace CheckBook
         }
 
 
-        private void SaveDataFile (string FileName)
+        private void SaveDataFile(string FileName)
         {
             using (StreamWriter csvWriter = new(FileName, false))
             {
@@ -329,7 +366,7 @@ namespace CheckBook
                     }
                 }
             }
-
+            ActiveBook.ClearChanged();
         }
 
 
@@ -464,7 +501,7 @@ namespace CheckBook
             }
             return nEntry;
         }
-        private static DateTime ParseDateTime (string Line)
+        private static DateTime ParseDateTime(string Line)
         {
             DateTime When;
             int Month = 0;

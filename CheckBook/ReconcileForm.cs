@@ -285,28 +285,12 @@ namespace CheckBook
             foreach (ReconcileRow ch in Checks)
             {
                 int iD = ch.ListID;
-                for (int index = 0; index < ActiveBook.CurrentLedger.Count; index++)
-                {
-                    if (ActiveBook.CurrentLedger[index].ID == iD)
-                    {
-                        if (ch.Cleared != ActiveBook.CurrentLedger[index].Cleared)
-                            ActiveBook.CurrentLedger[index].Cleared = ch.Cleared;
-                        break;
-                    }
-                }
+                ActiveBook.ReconcileThisCheck(iD, ch.Cleared);
             }
             foreach (DepositRow dp in Deposits)
             {
                 int iD = dp.ListID;
-                for (int index = 0; index < ActiveBook.CurrentLedger.Count; index++)
-                {
-                    if (ActiveBook.CurrentLedger[index].ID == iD)
-                    {
-                        if (dp.Cleared != ActiveBook.CurrentLedger[index].Cleared)
-                            ActiveBook.CurrentLedger[index].Cleared = dp.Cleared;
-                        break;
-                    }
-                }
+                ActiveBook.ReconcileThisDeposit(iD, dp.Cleared);
             }
             // close this window
             Close();

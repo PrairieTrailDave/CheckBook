@@ -29,135 +29,125 @@ namespace CheckBook
         /// </summary>
         private void InitializeComponent()
         {
-            this.ledgerDataGridView = new System.Windows.Forms.DataGridView();
-            this.openQuickenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.saveBKFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.openBKFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addTransactionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reconcileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.voidTransactionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.ledgerDataGridView)).BeginInit();
-            this.menuStrip1.SuspendLayout();
-            this.SuspendLayout();
+            ledgerDataGridView = new System.Windows.Forms.DataGridView();
+            openQuickenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            saveBKFileDialog = new System.Windows.Forms.SaveFileDialog();
+            openBKFileDialog = new System.Windows.Forms.OpenFileDialog();
+            menuStrip1 = new System.Windows.Forms.MenuStrip();
+            fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            addTransactionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            reconcileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            voidTransactionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)ledgerDataGridView).BeginInit();
+            menuStrip1.SuspendLayout();
+            SuspendLayout();
             // 
             // ledgerDataGridView
             // 
-            this.ledgerDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ledgerDataGridView.Location = new System.Drawing.Point(25, 28);
-            this.ledgerDataGridView.Margin = new System.Windows.Forms.Padding(2);
-            this.ledgerDataGridView.Name = "ledgerDataGridView";
-            this.ledgerDataGridView.RowHeadersWidth = 62;
-            this.ledgerDataGridView.RowTemplate.Height = 33;
-            this.ledgerDataGridView.Size = new System.Drawing.Size(822, 359);
-            this.ledgerDataGridView.TabIndex = 0;
+            ledgerDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            ledgerDataGridView.Location = new System.Drawing.Point(36, 47);
+            ledgerDataGridView.Name = "ledgerDataGridView";
+            ledgerDataGridView.RowHeadersWidth = 62;
+            ledgerDataGridView.RowTemplate.Height = 33;
+            ledgerDataGridView.Size = new System.Drawing.Size(1174, 598);
+            ledgerDataGridView.TabIndex = 0;
             // 
             // openQuickenFileDialog
             // 
-            this.openQuickenFileDialog.FileName = "QUICKEXP.TXT";
+            openQuickenFileDialog.FileName = "QUICKEXP.TXT";
             // 
             // openBKFileDialog
             // 
-            this.openBKFileDialog.FileName = "openFileDialog1";
+            openBKFileDialog.FileName = "openFileDialog1";
             // 
             // menuStrip1
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.addTransactionToolStripMenuItem,
-            this.reconcileToolStripMenuItem,
-            this.reportToolStripMenuItem,
-            this.voidTransactionToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.menuStrip1.Size = new System.Drawing.Size(856, 24);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
+            menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, addTransactionToolStripMenuItem, reconcileToolStripMenuItem, reportToolStripMenuItem, voidTransactionToolStripMenuItem });
+            menuStrip1.Location = new System.Drawing.Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new System.Drawing.Size(1223, 33);
+            menuStrip1.TabIndex = 2;
+            menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.importToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 22);
-            this.fileToolStripMenuItem.Text = "File";
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { openToolStripMenuItem, saveToolStripMenuItem, importToolStripMenuItem });
+            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
+            fileToolStripMenuItem.Text = "File";
             // 
             // openToolStripMenuItem
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
+            openToolStripMenuItem.Name = "openToolStripMenuItem";
+            openToolStripMenuItem.Size = new System.Drawing.Size(169, 34);
+            openToolStripMenuItem.Text = "Open";
+            openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
             // saveToolStripMenuItem
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+            saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            saveToolStripMenuItem.Size = new System.Drawing.Size(169, 34);
+            saveToolStripMenuItem.Text = "Save";
+            saveToolStripMenuItem.Click += SaveToolStripMenuItem_Click;
             // 
             // importToolStripMenuItem
             // 
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-            this.importToolStripMenuItem.Text = "Import";
-            this.importToolStripMenuItem.Click += new System.EventHandler(this.ImportToolStripMenuItem_Click);
+            importToolStripMenuItem.Name = "importToolStripMenuItem";
+            importToolStripMenuItem.Size = new System.Drawing.Size(169, 34);
+            importToolStripMenuItem.Text = "Import";
+            importToolStripMenuItem.Click += ImportToolStripMenuItem_Click;
             // 
             // addTransactionToolStripMenuItem
             // 
-            this.addTransactionToolStripMenuItem.Name = "addTransactionToolStripMenuItem";
-            this.addTransactionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
-            this.addTransactionToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
-            this.addTransactionToolStripMenuItem.Text = "&Add Transaction";
-            this.addTransactionToolStripMenuItem.Click += new System.EventHandler(this.AddTransactionToolStripMenuItem_Click);
+            addTransactionToolStripMenuItem.Name = "addTransactionToolStripMenuItem";
+            addTransactionToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A;
+            addTransactionToolStripMenuItem.Size = new System.Drawing.Size(155, 29);
+            addTransactionToolStripMenuItem.Text = "&Add Transaction";
+            addTransactionToolStripMenuItem.Click += AddTransactionToolStripMenuItem_Click;
             // 
             // reconcileToolStripMenuItem
             // 
-            this.reconcileToolStripMenuItem.Name = "reconcileToolStripMenuItem";
-            this.reconcileToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
-            this.reconcileToolStripMenuItem.Text = "&Reconcile";
-            this.reconcileToolStripMenuItem.Click += new System.EventHandler(this.ReconcileToolStripMenuItem_Click);
+            reconcileToolStripMenuItem.Name = "reconcileToolStripMenuItem";
+            reconcileToolStripMenuItem.Size = new System.Drawing.Size(101, 29);
+            reconcileToolStripMenuItem.Text = "&Reconcile";
+            reconcileToolStripMenuItem.Click += ReconcileToolStripMenuItem_Click;
             // 
             // reportToolStripMenuItem
             // 
-            this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
-            this.reportToolStripMenuItem.Size = new System.Drawing.Size(54, 22);
-            this.reportToolStripMenuItem.Text = "Report";
-            this.reportToolStripMenuItem.Click += new System.EventHandler(this.ReportToolStripMenuItem_Click);
+            reportToolStripMenuItem.Name = "reportToolStripMenuItem";
+            reportToolStripMenuItem.Size = new System.Drawing.Size(81, 29);
+            reportToolStripMenuItem.Text = "Report";
+            reportToolStripMenuItem.Click += ReportToolStripMenuItem_Click;
             // 
             // voidTransactionToolStripMenuItem
             // 
-            this.voidTransactionToolStripMenuItem.Name = "voidTransactionToolStripMenuItem";
-            this.voidTransactionToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
-            this.voidTransactionToolStripMenuItem.Text = "Void Transaction";
-            this.voidTransactionToolStripMenuItem.Click += new System.EventHandler(this.VoidTransactionToolStripMenuItem_Click);
+            voidTransactionToolStripMenuItem.Name = "voidTransactionToolStripMenuItem";
+            voidTransactionToolStripMenuItem.Size = new System.Drawing.Size(157, 29);
+            voidTransactionToolStripMenuItem.Text = "Void Transaction";
+            voidTransactionToolStripMenuItem.Click += VoidTransactionToolStripMenuItem_Click;
             // 
             // MainScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(856, 394);
-            this.Controls.Add(this.ledgerDataGridView);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "MainScreen";
-            this.Text = "Check Book Program";
-            ((System.ComponentModel.ISupportInitialize)(this.ledgerDataGridView)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(1223, 657);
+            Controls.Add(ledgerDataGridView);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
+            Name = "MainScreen";
+            Text = "Check Book Program";
+            FormClosing += MainScreen_FormClosing;
+            Shown += MainScreen_Shown;
+            ((System.ComponentModel.ISupportInitialize)ledgerDataGridView).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
