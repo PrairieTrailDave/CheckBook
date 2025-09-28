@@ -201,6 +201,12 @@ namespace CheckBook
             }
         }
 
+        public void AddTransaction(LedgerEntry newEntry)
+        {
+            CurrentLedger.Add(newEntry);
+            HasChanged();
+        }
+
         public void ReconcileThisCheck(int iD, bool CheckClearedFlag)
         {
             for (int index = 0; index < CurrentLedger.Count; index++)

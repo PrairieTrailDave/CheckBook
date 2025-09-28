@@ -22,6 +22,7 @@ namespace CheckBook
     {
         public MyCheckbook ActiveBook;
         string CurrentActiveFile;
+        string InputFolder;
 
         public MainScreen()
         {
@@ -74,6 +75,7 @@ namespace CheckBook
             saveBKFileDialog.DefaultExt = "csv";
             saveBKFileDialog.Filter = "CheckBook files (*.csv)|*.csv|All files (*.*)|*.*";
             saveBKFileDialog.FileName = CurrentActiveFile;
+            saveBKFileDialog.InitialDirectory = InputFolder;
             if (saveBKFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Cursor = Cursors.WaitCursor;
@@ -121,7 +123,7 @@ namespace CheckBook
                         ActiveBook.InsertTransaction(ATF.tEntry);
                     }
                     else
-                        ActiveBook.CurrentLedger.Add(ATF.tEntry);
+                        ActiveBook.AddTransaction(ATF.tEntry);
 
                     ledgerDataGridView.DataSource = null;
                     ledgerDataGridView.DataSource = ActiveBook.CurrentLedger;
@@ -211,6 +213,7 @@ namespace CheckBook
         {
             try
             {
+                openBKFileDialog.FileName = "*.csv";
                 openBKFileDialog.Filter = "CheckBook files (*.csv)|*.csv|All files (*.*)|*.*";
 
                 if (openBKFileDialog.ShowDialog() == DialogResult.OK)
@@ -218,7 +221,8 @@ namespace CheckBook
                     this.UseWaitCursor = true;
                     Application.DoEvents();
                     ReadDataFile(openBKFileDialog.FileName);
-                    CurrentActiveFile = openBKFileDialog.FileName;
+                    CurrentActiveFile = openBKFileDialog.SafeFileName;
+                    InputFolder = Path.GetDirectoryName(openBKFileDialog.FileName) ?? "";
                     ledgerDataGridView.DataSource = ActiveBook.CurrentLedger;
                     //ledgerDataGridView.Columns[0].Visible = false;
                     ledgerDataGridView.AutoResizeColumns();
